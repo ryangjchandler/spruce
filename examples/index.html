@@ -8,6 +8,12 @@
             <input type="text" x-model="$store.dropdown.hello">
             <span x-text="$store.dropdown.hello"></span>
         </div>
+        
+        <h3>The button below is a completely different component</h3>
+
+        <div x-data x-subscribe>
+            <button @click="$store.dropdown.hello = 'amazing'">Update world to amazing</button>
+        </div>
         <script>
             Spruce.store('dropdown', {
                 hello: 'world'

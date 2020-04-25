@@ -8,10 +8,12 @@
     },
     "author": "Ryan Chandler <support@ryangjchandler.co.uk>",
     "license": "MIT",
-    "scripts": {
-
-    },
+    "source": "src/index.js",
+    "main": "dist/spruce.js",
+    "umd:main": "dist/spruce.umd.js",
+    "module": "dist/foo.module.js",
+    "scripts": {},
     "devDependencies": {
-
+        "microbundle": "^0.11.0"
     }
 }

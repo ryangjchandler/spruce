@@ -17,6 +17,7 @@
         "watch": "microbundle watch"
     },
     "devDependencies": {
-        "microbundle": "^0.11.0"
+        "microbundle": "^0.11.0",
+        "observable-membrane": "^0.26.1"
     }
 }

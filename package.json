@@ -1,0 +1,17 @@
+{
+    "name": "@ryangjchandler/spruce",
+    "description": "A lightweight state management layer for Alpine.js",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com/ryangjchandler/spruce"
+    },
+    "author": "Ryan Chandler <support@ryangjchandler.co.uk>",
+    "license": "MIT",
+    "scripts": {
+
+    },
+    "devDependencies": {
+
+    }
+}

@@ -17,3 +17,7 @@ export const buildInitExpression = el => {
 
     return expression
 }
+
+export const isNullOrUndefined = value => {
+    return value === null || value === undefined
+}

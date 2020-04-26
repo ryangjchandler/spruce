@@ -1,7 +1,8 @@
 import Spruce from '../dist/spruce.module.js'
 
 Spruce.store('dropdown', {
-    hello: 'world'
+    hello: 'world',
+    testing: null,
 })
 
 Spruce.store('name', 'Application')

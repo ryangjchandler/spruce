@@ -2,7 +2,6 @@ import { domReady, buildInitExpression } from './utils'
 import { createObservable } from './observable'
 
 const Spruce = {
-
     stores: {},
 
     subscribers: [],

@@ -1,8 +1,4 @@
-import Spruce from '../dist/spruce.module.js'
+import Store from './store.js'
 
-Spruce.store('dropdown', {
-    hello: 'world'
-})
-
-window.Spruce = Spruce
+window.Spruce = Store
 window.Spruce.start()

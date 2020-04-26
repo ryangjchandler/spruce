@@ -1,4 +1,4 @@
-export const create = (target, callback) => {
+export const createObservable = (target, callback) => {
     Object.keys(target).forEach(key => {
         if (Object.getPrototypeOf(target[key]) === Object.prototype) {
             target[key] = create(target[key], callback)

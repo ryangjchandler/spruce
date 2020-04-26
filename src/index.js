@@ -1,5 +1,5 @@
 import { domReady, buildInitExpression } from './utils'
-import { create } from './observable'
+import { createObservable } from './observable'
 
 const Spruce = {
 
@@ -15,7 +15,7 @@ const Spruce = {
             el.removeAttribute('x-subscribe')
         })
 
-        this.stores = create(this.stores, (key, value) => {
+        this.stores = createObservable(this.stores, (key, value) => {
             this.updateSubscribers(key, value)
         })
     },

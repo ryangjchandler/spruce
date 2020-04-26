@@ -1,6 +1,6 @@
 export const createObservable = (target, callback) => {
     Object.keys(target).forEach(key => {
-        if (Object.getPrototypeOf(target[key]) === Object.prototype) {
+        if (Object.getPrototypeOf(target[key]) === Object.prototype && ! [null, undefined].includes(target[key])) {
             target[key] = createObservable(target[key], callback)
         }
     })

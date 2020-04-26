@@ -22,7 +22,7 @@ Include the following `<script>` tag in the `<head>` of your document:
 
 > **Important**: This must be added **before** loading Alpine.js when using CDN links.
 
-### Manual
+### Manual (coming soon)
 
 If you wish to include Spruce with your own bundle:
 

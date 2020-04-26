@@ -34,15 +34,7 @@ Then add the following to your script:
 
 ```javascript
 import Spruce from '@ryangjchandler/spruce'
-
-if (! window.Spruce) {
-    window.Spruce = Spruce
-}
-
-Spruce.start()
 ```
-
-Since Alpine will try to use Spruce from the `window` context, you must assign it to a `window.Spruce` variable still.
 
 ## Usage
 
@@ -62,6 +54,8 @@ If you are using the CDN build, you can interact with Spruce using the `window.S
 
 If you are importing Spruce into your own bundle, you can interact with it like any other variable:
 
+**store.js**
+
 ```javascript
 import Spruce from '@ryangjchandler/spruce'
 
@@ -69,8 +63,17 @@ Spruce.store('modals', {
     open: 'login'
 })
 
-window.Spruce = Spruce
+export default Spruce
 ```
+
+**app.js**
+
+```javascript
+import Store from './store'
+import 'alpinejs'
+```
+
+> **Note**: You must `import` your store before Alpine.
 
 ### Subscribing your components
 

@@ -1,4 +1,2 @@
 import Store from './store.js'
-
-window.Spruce = Store
-window.Spruce.start()
+import '../node_modules/alpinejs/dist/alpine.js'

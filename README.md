@@ -8,6 +8,8 @@ A lightweight state management layer for Alpine.js
 
 ## Installation
 
+### CDN
+
 Include the following `<script>` tag in the `<head>` of your document:
 
 ```html

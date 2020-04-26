@@ -1,6 +1,7 @@
 <html>
     <head>
-        <script src="../dist/spruce.umd.js"></script>
+        <!-- <script src="../dist/spruce.umd.js"></script> -->
+        <script type="module" src="./test.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
     </head>
     <body>
@@ -14,10 +15,10 @@
         <div x-data x-subscribe>
             <button @click="$store.dropdown.hello = 'amazing'">Update world to amazing</button>
         </div>
-        <script>
+        <!-- <script>
             Spruce.store('dropdown', {
                 hello: 'world'
             })
-        </script>
+        </script> -->
     </body>
 </html>

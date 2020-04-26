@@ -94,7 +94,7 @@ Spruce.store('application', {
 })
 ```
 
-The first argument defines the top level property of the scope. The second argument defines the state for the scope, it could be an string, integer or object with nested properties.
+The first argument defines the top level property of the scope. The second argument defines the state for the scope, it could be a string, integer or object with nested properties.
 
 To access the `name` property, you can do the following inside of your component:
 

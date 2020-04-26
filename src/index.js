@@ -17,10 +17,6 @@ const Spruce = {
         this.stores = createObservable(this.stores, (key, value) => {
             this.updateSubscribers(key, value)
         })
-
-        if (! window.Spruce) {
-            window.Spruce = this
-        }
     },
 
     store: function (name, state = {}) {

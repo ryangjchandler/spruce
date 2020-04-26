@@ -86,7 +86,7 @@ This directive adds a new `$store` magic variable to your component. This can be
 
 ### Defining global state
 
-To define a scope of state, you can use the `Spruce.store()` method:
+To define a piece of global state, you can use the `Spruce.store()` method:
 
 ```javascript
 Spruce.store('application', {

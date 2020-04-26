@@ -34,8 +34,74 @@ Then add the following to your script:
 
 ```javascript
 import Spruce from '@ryangjchandler/spruce'
+
+if (! window.Spruce) {
+    window.Spruce = Spruce
+}
+
+Spruce.start()
 ```
+
+Since Alpine will try to use Spruce from the `window` context, you must assign it to a `window.Spruce` variable still.
 
 ## Usage
 
 Spruce exposes less than a handful of possible interaction points. There is an extremely simple "subscriptions" interaction which connects the roots from your Alpine component to the global store, then there is the "stores" interaction which allows you to define scopes of global state for use throughout your components.
+
+### Entry point
+
+If you are using the CDN build, you can interact with Spruce using the `window.Spruce` variable:
+
+```html
+<script>
+    Spruce.store('modals', {
+        open: 'login',
+    })
+</script>
+```
+
+If you are importing Spruce into your own bundle, you can interact with it like any other variable:
+
+```javascript
+import Spruce from '@ryangjchandler/spruce'
+
+Spruce.store('modals', {
+    open: 'login'
+})
+
+window.Spruce = Spruce
+```
+
+### Subscribing your components
+
+To access the global state from your Alpine components, you can simply add the `x-subscribe` directive to your root component.
+
+```html
+<div x-data="{}" x-subscribe>
+    <span x-text="$store.application.name"></span>
+</div>
+```
+
+This directive adds a new `$store` magic variable to your component. This can be used to "get" and "set" data in your global store.
+
+### Defining global state
+
+To define a scope of state, you can use the `Spruce.store()` method:
+
+```javascript
+Spruce.store('application', {
+    name: 'Amazing Alpine Application'
+})
+```
+
+The first argument defines the top level property of the scope. The second argument defines the state for the scope, it could be an string, integer or object with nested properties.
+
+To access the `name` property, you can do the following inside of your component:
+
+```html
+<div x-data="{}" x-subscribe>
+    <span x-text="$store.application.name"></span>
+</div>
+```
+
+The `<span>` will now have "Amazing Alpine Application" set as its `innerText`.

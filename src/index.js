@@ -34,7 +34,7 @@ const Spruce = {
 
     updateSubscribers(key, value) {
         this.subscribers.forEach(el => {
-            if (el.__x !== 'undefined') {
+            if (el.__x !== undefined) {
                 el.__x.$data.spruce = [key, value]
             }
         })

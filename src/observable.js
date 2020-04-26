@@ -1,14 +1,14 @@
 export const createObservable = (target, callback) => {
     Object.keys(target).forEach(key => {
         if (Object.getPrototypeOf(target[key]) === Object.prototype) {
-            target[key] = create(target[key], callback)
+            target[key] = createObservable(target[key], callback)
         }
     })
 
     return new Proxy(target, {
         set(target, key, value) {
             if (typeof value === 'object') {
-                value = create(value, callback)
+                value = createObservable(value, callback)
             }
 
             callback(key, target[key] = value)

@@ -17,7 +17,7 @@ Many large frameworks have their own state management solutions. One thing these
 Include the following `<script>` tag in the `<head>` of your document:
 
 ```html
-<script src="/path/to/spruce.js">
+<script src="https://cdn.jsdelivr.net/gh/ryangjchandler/spruce@0.1.2/dist/spruce.umd.js">
 ```
 
 > **Important**: This must be added **before** loading Alpine.js when using CDN links.

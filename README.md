@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./docs/example.png" />
+    <img src="./docs/example.png" width="50%" />
 </p>
 
 # 🌲 Spruce

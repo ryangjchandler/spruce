@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <script src="../dist/spruce.umd.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+    </head>
+    <body>
+        <div x-data x-subscribe>
+            <span x-text="$store.application.name"></span>
+            <button @click="$store.application.name = 'Example'">Click</button>
+        </div>
+        <script>
+            Spruce.store('application', {
+                name: 'Application'
+            })
+        </script>
+    </body>
+</html>

@@ -128,3 +128,9 @@ This will trigger Alpine to re-evaluate your subscribed components and re-render
 This projects follow the [Semantic Versioning](https://semver.org/) guidelines. This means that there *could* be breaking changes on minor version changes, up until v1.x is reached.
 
 For example, 0.1 -> 0.2 might introduce a breaking change.
+
+## License
+
+Copyright (c) 2020 Ryan Chandler and contributors
+
+Licensed under the MIT license, see [LICENSE.md](LICENSE.md) for details.

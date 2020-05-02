@@ -4,6 +4,7 @@ import EventBus from './bus'
 
 const Spruce = {
     options: {
+        enableUpdateEvents: true,
         globalStoreVariable: false,
     },
 
@@ -22,8 +23,14 @@ const Spruce = {
         })
 
         this.stores = createObservable(this.stores, {
-            set: (key, value) => {
+            set: (target, key, value) => {
+                this.events.runWatchers(this.stores, target, key)
+
                 this.updateSubscribers(key, value)
+
+                if (this.options.enableUpdateEvents) {
+                    this.emit('updated')
+                }
             }
         })
 
@@ -68,6 +75,10 @@ const Spruce = {
 
     emit(name, data = {}) {
         this.events.emit(name, { ...data, store: this.stores })
+    },
+
+    watch(dotNotation, callback) {
+        this.events.watch(dotNotation, callback)
     }
 }
 

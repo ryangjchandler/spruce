@@ -20,7 +20,7 @@ export const createObservable = (target, callbacks) => {
                 value = createObservable(value, callbacks)
             }
 
-            callbacks.set(key, target[key] = value)
+            callbacks.set(target, key, target[key] = value)
 
             return true
         }

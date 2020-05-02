@@ -1,4 +1,6 @@
 export default {
+    watchers: {},
+
     events: {},
 
     on(name, callback) {
@@ -22,5 +24,33 @@ export default {
             detail: data,
             bubbles: true
         }))
+    },
+
+    watch(dotNotation, callback) {
+        if (! this.watchers[dotNotation]) {
+            this.watchers[dotNotation] = []
+        }
+
+        this.watchers[dotNotation].push(callback)
+    },
+
+    runWatchers(stores, target, key) {
+        const self = this
+
+        Object.keys(self.watchers)
+            .filter(watcher => watcher.includes('.'))
+            .forEach(fullDotNotationKey => {
+                let dotNotationParts = fullDotNotationKey.split('.')
+
+                if (key !== dotNotationParts[dotNotationParts.length - 1]) return
+
+                dotNotationParts.reduce((comparison, part) => {
+                    if (Object.is(target, comparison)) {
+                        self.watchers[fullDotNotationKey].forEach(callback => callback(target[key]))
+                    }
+
+                    return comparison[part]
+                }, stores)
+            })
     }
 }

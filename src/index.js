@@ -2,6 +2,10 @@ import { domReady, buildInitExpression } from './utils'
 import { createObservable } from './observable'
 
 const Spruce = {
+    options: {
+        globalStoreVariable: false,
+    },
+
     stores: {},
 
     subscribers: [],
@@ -14,9 +18,21 @@ const Spruce = {
             el.removeAttribute('x-subscribe')
         })
 
-        this.stores = createObservable(this.stores, (key, value) => {
-            this.updateSubscribers(key, value)
+        this.stores = createObservable(this.stores, {
+            set: (key, value) => {
+                this.updateSubscribers(key, value)
+            }
         })
+
+        if (this.options.globalStoreVariable) {
+            document.querySelectorAll('[x-data]').forEach(el => {
+                if (! this.subscribers.includes(el)) {
+                    this.subscribers.push(el)
+                }
+            })
+            
+            window.$store = this.stores
+        }
     },
 
     store: function (name, state = {}) {
@@ -34,9 +50,13 @@ const Spruce = {
     updateSubscribers(key, value) {
         this.subscribers.forEach(el => {
             if (el.__x !== undefined) {
-                el.__x.$data.spruce = [key, value]
+                el.__x.$data.spruce = value
             }
         })
+    },
+
+    config(options = {}) {
+        this.options = Object.assign(this.options, options)
     }
 }
 

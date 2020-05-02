@@ -5,7 +5,7 @@ test('createObservable > successfully wraps object', () => {
         foo: 'bar'
     }
 
-    let observable = createObservable(target, () => {})
+    let observable = createObservable(target, { get: () => {} })
 
     expect(observable.foo).toEqual('bar')
 })
@@ -19,7 +19,7 @@ test('createObservable > can access deeply nested props', () => {
         }
     }
 
-    let observable = createObservable(target, () => {})
+    let observable = createObservable(target, { get: () => {} })
 
     expect(observable.foo.bar.baz).toEqual('bob')
 })
@@ -31,8 +31,10 @@ test('createObservable > will run callback on set trap', () => {
 
     let fixture = 0
 
-    let observable = createObservable(target, () => {
-        fixture = 100
+    let observable = createObservable(target, {
+        set: () => {
+            fixture = 100
+        }
     })
 
     observable.foo = 'bob'

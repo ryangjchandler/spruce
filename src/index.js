@@ -65,6 +65,10 @@ const Spruce = {
     on(name, callback) {
         this.events.on(name, callback)
     },
+
+    emit(name, data = {}) {
+        this.events.emit(name, { ...data, store: this.stores })
+    }
 }
 
 const deferrer = window.deferLoadingAlpine || function (callback) { callback() }

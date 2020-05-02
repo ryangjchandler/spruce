@@ -21,6 +21,10 @@ const Spruce = {
         this.stores = createObservable(this.stores, (key, value) => {
             this.updateSubscribers(key, value)
         })
+
+        if (this.options.globalStoreVariable) {
+            window.$store = this.stores
+        }
     },
 
     store: function (name, state = {}) {

@@ -1,10 +1,13 @@
 import { domReady, buildInitExpression } from './utils'
 import { createObservable } from './observable'
+import EventBus from './bus'
 
 const Spruce = {
     options: {
         globalStoreVariable: false,
     },
+
+    events: EventBus,
 
     stores: {},
 
@@ -57,6 +60,14 @@ const Spruce = {
 
     config(options = {}) {
         this.options = Object.assign(this.options, options)
+    },
+
+    on(name, callback) {
+        this.events.on(name, callback)
+    },
+
+    emit(name, data = {}) {
+        this.events.emit(name, { ...data, store: this.stores })
     }
 }
 

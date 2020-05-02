@@ -2,7 +2,7 @@ export default {
     events: {},
 
     on(name, callback) {
-        if (! this.events.hasOwnProperty(name)) {
+        if (! this.events[name]) {
             this.events[name] = []
         }
 
@@ -10,7 +10,7 @@ export default {
     },
 
     emit(name, data = {}) {
-        if (this.events.hasOwnProperty(name)) {
+        if (this.events[name]) {
             this.events[name].forEach(callback => {
                 callback(data)
             })

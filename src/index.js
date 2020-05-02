@@ -2,6 +2,10 @@ import { domReady, buildInitExpression } from './utils'
 import { createObservable } from './observable'
 
 const Spruce = {
+    options: {
+        globalStoreVariable: false,
+    },
+
     stores: {},
 
     subscribers: [],
@@ -37,6 +41,10 @@ const Spruce = {
                 el.__x.$data.spruce = [key, value]
             }
         })
+    },
+
+    config(options = {}) {
+        this.options = Object.assign(this.options, options)
     }
 }
 

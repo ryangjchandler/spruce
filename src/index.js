@@ -18,8 +18,13 @@ const Spruce = {
             el.removeAttribute('x-subscribe')
         })
 
-        this.stores = createObservable(this.stores, (key, value) => {
-            this.updateSubscribers(key, value)
+        this.stores = createObservable(this.stores, {
+            get: (key) => {
+                
+            },
+            set: (key, value) => {
+                this.updateSubscribers(key, value)
+            }
         })
 
         if (this.options.globalStoreVariable) {

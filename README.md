@@ -123,6 +123,24 @@ Spruce.stores.application.name = 'Amazing Spruce Integration'
 
 This will trigger Alpine to re-evaluate your subscribed components and re-render.
 
+### Removing the need for `x-subscribe`
+
+Alpine offers a Config API. Using this API, you can enable an experimental global `$store` variable that is declared on the `window` object. This means your components do not need to manually "subscribe" to state changes:
+
+```html
+<script>
+    Spruce.config({
+        globalStoreVariable: true
+    })
+</script>
+
+<div x-data>
+    <span x-text="$store.foo.bar"></span>
+</div>
+```
+
+> **Important**: This feature is **highly unoptimized** at the moment and will actually cause all of your Alpine components on the page to re-render. This is due to the limited API that Alpine exposes to third party libraries and the `$store` variable has no simple way of knowing which element is currently retrieving data from the global store.
+
 ## Versioning
 
 This projects follow the [Semantic Versioning](https://semver.org/) guidelines. This means that there *could* be breaking changes on minor version changes, up until v1.x is reached.

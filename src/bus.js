@@ -15,5 +15,10 @@ export default {
                 callback(data)
             })
         }
+
+        window.dispatchEvent(new CustomEvent(`spruce:${name}`, {
+            data,
+            bubbles: true
+        }))
     }
 }

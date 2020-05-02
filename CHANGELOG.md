@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.2.0
+
+### Added
+
+* Added a new experimental config API that allows developers to enable usage of a global $store variable, without needing components to subscribe through the x-subscribe directive (see bottom of [README](README.md) for more info).
+
 ## v0.1.2
 
 ### Fixed

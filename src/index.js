@@ -19,15 +19,18 @@ const Spruce = {
         })
 
         this.stores = createObservable(this.stores, {
-            get: (key) => {
-                
-            },
             set: (key, value) => {
                 this.updateSubscribers(key, value)
             }
         })
 
         if (this.options.globalStoreVariable) {
+            document.querySelectorAll('[x-data]').forEach(el => {
+                if (! this.subscribers.includes(el)) {
+                    this.subscribers.push(el)
+                }
+            })
+            
             window.$store = this.stores
         }
     },
@@ -47,7 +50,7 @@ const Spruce = {
     updateSubscribers(key, value) {
         this.subscribers.forEach(el => {
             if (el.__x !== undefined) {
-                el.__x.$data.spruce = [key, value]
+                el.__x.$data.spruce = value
             }
         })
     },

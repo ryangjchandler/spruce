@@ -9,8 +9,10 @@ export const createObservable = (target, callbacks) => {
 
     return new Proxy(target, {
         get(target, key) {
-            callbacks.get(key)
-
+            if (callbacks.hasOwnProperty('get')) {
+                callbacks.get(key)
+            }
+            
             return target[key]
         },
         set(target, key, value) {

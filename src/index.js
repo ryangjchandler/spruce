@@ -4,7 +4,6 @@ import EventBus from './bus'
 
 const Spruce = {
     options: {
-        enableUpdateEvents: true,
         globalStoreVariable: false,
     },
 
@@ -27,10 +26,6 @@ const Spruce = {
                 this.events.runWatchers(this.stores, target, key)
 
                 this.updateSubscribers(key, value)
-
-                if (this.options.enableUpdateEvents) {
-                    this.emit('updated')
-                }
             }
         })
 

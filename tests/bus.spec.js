@@ -65,3 +65,23 @@ test('.emit() > will dispatch browser event to window with spruce: prefix', asyn
         expect(document.querySelector('span').innerText).toEqual('car')
     })
 })
+
+test('.watch() > can listen for changes to property', async () => {
+    let fixture = undefined
+    
+    Spruce.store('example', {
+        cool: 'stuff'
+    })
+
+    Spruce.watch('example.cool', (value) => {
+        fixture = value
+    })
+
+    await Spruce.start()
+
+    expect(fixture).toBeUndefined()
+
+    Spruce.stores.example.cool = 'amazing'
+
+    expect(fixture).toEqual('amazing')
+})

@@ -37,6 +37,10 @@ export default {
     runWatchers(stores, target, key) {
         const self = this
 
+        if (self.watchers[key]) {
+            return self.watchers[key].forEach(callback => callback(target[key]))
+        }
+
         Object.keys(self.watchers)
             .filter(watcher => watcher.includes('.'))
             .forEach(fullDotNotationKey => {
@@ -45,7 +49,7 @@ export default {
                 if (key !== dotNotationParts[dotNotationParts.length - 1]) return
 
                 dotNotationParts.reduce((comparison, part) => {
-                    if (Object.is(target, comparison)) {
+                    if (comparison[key] === target[key] || Object.is(target, comparison)) {
                         self.watchers[fullDotNotationKey].forEach(callback => callback(target[key]))
                     }
 

@@ -17,7 +17,7 @@ export default {
         }
 
         window.dispatchEvent(new CustomEvent(`spruce:${name}`, {
-            data,
+            detail: data,
             bubbles: true
         }))
     }

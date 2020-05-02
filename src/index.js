@@ -22,8 +22,8 @@ const Spruce = {
         })
 
         this.stores = createObservable(this.stores, {
-            set: (target, key, value) => {
-                this.events.runWatchers(this.stores, target, key)
+            set: (target, key, value, oldValue) => {
+                this.events.runWatchers(this.stores, target, key, oldValue)
 
                 this.updateSubscribers(key, value)
             }

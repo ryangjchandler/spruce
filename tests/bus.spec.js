@@ -68,12 +68,14 @@ test('.emit() > will dispatch browser event to window with spruce: prefix', asyn
 
 test('.watch() > can listen for changes to property', async () => {
     let fixture = undefined
+    let oldFixture = undefined
     
     Spruce.store('example', {
         cool: 'stuff'
     })
 
-    Spruce.watch('example.cool', (value) => {
+    Spruce.watch('example.cool', (previous, value) => {
+        oldFixture = previous
         fixture = value
     })
 
@@ -84,4 +86,5 @@ test('.watch() > can listen for changes to property', async () => {
     Spruce.stores.example.cool = 'amazing'
 
     expect(fixture).toEqual('amazing')
+    expect(oldFixture).toEqual('stuff')
 })

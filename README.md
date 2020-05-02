@@ -123,6 +123,10 @@ Spruce.stores.application.name = 'Amazing Spruce Integration'
 
 This will trigger Alpine to re-evaluate your subscribed components and re-render.
 
+### Externally watching for changes
+
+You can register watchers in a similar fashion to Alpine. All you need is the full dot-notation representation of your piece of state and a callback.
+
 ### Removing the need for `x-subscribe`
 
 Alpine offers a Config API. Using this API, you can enable an experimental global `$store` variable that is declared on the `window` object. This means your components do not need to manually "subscribe" to state changes:

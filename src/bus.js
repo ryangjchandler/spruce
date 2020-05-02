@@ -16,6 +16,7 @@ export default {
             })
         }
 
+        // TODO: deal with this for IE11 :(
         window.dispatchEvent(new CustomEvent(`spruce:${name}`, {
             detail: data,
             bubbles: true

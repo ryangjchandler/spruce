@@ -147,6 +147,31 @@ In the above snippet, when we change the value of `form.email` either from a com
 
 > **Note**: you can get stuck in an watch loop if you're updating other store properties that also have watchers defined.
 
+### Event bus
+
+Spruce ships with a basic event bus. It exposes two methods:
+
+* `Spruce.on(eventName, callback)` - this can be used to register an event listener. This will react to any internal events, such as `init`. Your callback will receive a single `detail` property which can any information from the event, as well as the global store.
+
+```js
+Spruce.on('init', ({ store }) => {
+    // do something with the store here...
+})
+```
+
+* `Spruce.emit(eventName, data = {})` - this can be used to emit an event. The first argument should be the name of the event, the second should be an object containing data. This will be merged in with the core data, which consists of a `store` property. When emitting an event, a browser event will also be dispatched with a `spruce:` prefix.
+
+```js
+Spruce.emit('event-name', { foo: 'bar' })
+```
+
+In the example above, a `spruce:event-name` event will be fired on the `window` level, so you could register an event listener inside of your Alpine component:
+
+```html
+<div x-data @spruce:event-name.window="foo = $event.detail.store.foo">
+</div>
+```
+
 ### Removing the need for `x-subscribe`
 
 Alpine offers a Config API. Using this API, you can enable an experimental global `$store` variable that is declared on the `window` object. This means your components do not need to manually "subscribe" to state changes:

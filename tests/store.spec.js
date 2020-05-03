@@ -9,11 +9,11 @@ test('Spruce.store() > namespace and data set correctly', () => {
         foo: 'bar'
     })
 
-    expect(Spruce.stores.testing).toEqual({
+    expect(Spruce.store('testing')).toEqual({
         foo: 'bar'
     })
 
-    expect(Spruce.stores.testing.foo).toEqual('bar')
+    expect(Spruce.store('testing').foo).toEqual('bar')
 })
 
 test('Spruce.store() > existing namespace will not be overwritten', () => {
@@ -21,7 +21,7 @@ test('Spruce.store() > existing namespace will not be overwritten', () => {
         foo: 'bar'
     })
 
-    expect(Spruce.stores.testing).toEqual({
+    expect(Spruce.store('testing')).toEqual({
         foo: 'bar'
     })
 
@@ -29,7 +29,7 @@ test('Spruce.store() > existing namespace will not be overwritten', () => {
         bob: 'car'
     })
 
-    expect(Spruce.stores.testing).toEqual({
+    expect(Spruce.store('testing')).toEqual({
         foo: 'bar'
     })
 })

@@ -16,6 +16,8 @@ const Spruce = {
     start: async function () {
         await domReady()
 
+        this.emit('init')
+
         document.querySelectorAll('[x-subscribe]').forEach(el => {
             el.setAttribute('x-init', buildInitExpression(el))
             el.removeAttribute('x-subscribe')

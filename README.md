@@ -145,6 +145,8 @@ You can register watchers in a similar fashion to Alpine. All you need is the fu
 
 In the above snippet, when we change the value of `form.email` either from a component or externally in a separate JavaScript file, our callback will be invoked and will receive the old value, as well as the new value. This can be useful for running automatic inline validation when a property changes, or triggering an action elsewhere in another component without the need for dispatching events.
 
+> **Note**: you can get stuck in an watch loop if you're updating other store properties that also have watchers defined.
+
 ### Removing the need for `x-subscribe`
 
 Alpine offers a Config API. Using this API, you can enable an experimental global `$store` variable that is declared on the `window` object. This means your components do not need to manually "subscribe" to state changes:

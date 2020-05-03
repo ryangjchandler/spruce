@@ -16,11 +16,13 @@ export const createObservable = (target, callbacks) => {
             return target[key]
         },
         set(target, key, value) {
+            const old = target[key]
+
             if (! isNullOrUndefined(value) && typeof value === 'object') {
                 value = createObservable(value, callbacks)
             }
 
-            callbacks.set(key, target[key] = value)
+            callbacks.set(target, key, target[key] = value, old)
 
             return true
         }

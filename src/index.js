@@ -22,7 +22,9 @@ const Spruce = {
         })
 
         this.stores = createObservable(this.stores, {
-            set: (key, value) => {
+            set: (target, key, value, oldValue) => {
+                this.events.runWatchers(this.stores, target, key, oldValue)
+
                 this.updateSubscribers(key, value)
             }
         })
@@ -70,6 +72,10 @@ const Spruce = {
 
     emit(name, data = {}) {
         this.events.emit(name, { ...data, store: this.stores })
+    },
+
+    watch(dotNotation, callback) {
+        this.events.watch(dotNotation, callback)
     }
 }
 

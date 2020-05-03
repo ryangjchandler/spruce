@@ -1,4 +1,4 @@
-import { domReady, buildInitExpression } from './utils'
+import { domReady, buildInitExpression, isNullOrUndefined } from './utils'
 import { createObservable } from './observable'
 import EventBus from './bus'
 
@@ -38,7 +38,11 @@ const Spruce = {
         }
     },
 
-    store: function (name, state = {}) {
+    store: function (name, state) {
+        if (state === undefined && this.stores[name]) {
+            return this.stores[name]
+        }
+
         if (! this.stores[name]) {
             this.stores[name] = state
         }

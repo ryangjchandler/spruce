@@ -114,14 +114,14 @@ The `<span>` will now have "Amazing Alpine Application" set as its `innerText`.
 
 ### Modifying state from outside of Alpine
 
-You can modify your global state from external scripts using the `Spruce` object:
+You can modify your global state from external scripts using the `Spruce.store()` method too:
 
 ```javascript
 Spruce.store('application', {
     name: 'Amazing Alpine Application'
 })
 
-Spruce.stores.application.name = 'Amazing Spruce Integration'
+Spruce.store('application').name = 'Amazing Spruce Integration'
 ```
 
 This will trigger Alpine to re-evaluate your subscribed components and re-render.

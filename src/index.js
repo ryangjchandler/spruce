@@ -39,13 +39,11 @@ const Spruce = {
     },
 
     store: function (name, state) {
-        if (state === undefined && this.stores[name]) {
-            return this.stores[name]
-        }
-
         if (! this.stores[name]) {
             this.stores[name] = state
         }
+
+        return this.stores[name]
     },
 
     subscribe(el) {

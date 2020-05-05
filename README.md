@@ -39,6 +39,43 @@ Then add the following to your script:
 import Spruce from '@ryangjchandler/spruce'
 ```
 
+## Quick start
+
+To verify you have correctly installed Spruce, copy & paste the following code snippet into your project.
+
+```html
+<div x-data="{}" x-subscribe>
+    <div x-show="$store.modal.open === 'login'">
+    <p>
+      This "login" modal isn't built with a11y in mind, don't actually use it
+    </p>
+    </div>
+</div>
+
+<div x-data="{}" x-subscribe>
+    <div x-show="$store.modal.open === 'register'">
+    <p>
+      This "register" modal isn't built with a11y in mind, don't actually use it
+    </p>
+    </div>
+</div>
+
+<div x-data="{}" x-subscribe>
+  <select x-model="$store.modal.open">
+    <option value="login" selected>login</option>
+    <option value="register">register</option>
+  </select>
+</div>
+
+<script>
+  Spruce.store('modal', {
+    open: 'login',
+  });
+</script>
+```
+
+To see what the code _should_ do, use [this CodePen](https://codepen.io/hugodf/pen/dyYJXEa). Thanks @HugoDF!
+
 ## Usage
 
 Spruce exposes less than a handful of possible interaction points. There is an extremely simple "subscriptions" interaction which connects the roots from your Alpine component to the global store, then there is the "stores" interaction which allows you to define scopes of global state for use throughout your components.

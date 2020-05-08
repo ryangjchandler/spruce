@@ -1,0 +1,61 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Setup Node (${{ matrix.node-version }})
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+      
+      - name: Set up git user
+        run: git config --global user.name ${GITHUB_ACTOR}
+      
+      - name: Set up git email
+        run: git config --global user.name ${GITHUB_ACTOR}@users.noreply.github.com
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build dist folder
+        run: yarn build
+        
+      - name: Run test suite
+        run: yarn test
+
+      - name: Commit dist folder if needed #it fails if nothing has changed so we allow an error
+        run: git commit -am 'Rebuild dist'
+        continue-on-error: true
+
+      - name: Read tag name
+        run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF:10}
+
+      - name: Delete tag #for some reason npm version fails if the tag exists
+        run: git tag -d $RELEASE_VERSION
+
+      - name: Update version in package.json
+        run: npm version $RELEASE_VERSION
+
+      - name: Push changed files to master
+        run: git push origin HEAD:master
+
+      - name: Recreate tag
+        run: git tag -f $RELEASE_VERSION
+
+      - name: Update remote tag
+        run: git push --tags --force
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}

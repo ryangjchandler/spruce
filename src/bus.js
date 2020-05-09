@@ -9,6 +9,8 @@ export default {
         }
 
         this.events[name].push(callback)
+
+        return () => this.off(name, callback)
     },
 
     off(name, callback) {

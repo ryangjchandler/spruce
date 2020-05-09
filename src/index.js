@@ -69,7 +69,7 @@ const Spruce = {
     },
 
     on(name, callback) {
-        this.events.on(name, callback)
+        return this.events.on(name, callback)
     },
 
     off(name, callback) {

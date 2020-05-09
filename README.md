@@ -25,12 +25,18 @@ Include the following `<script>` tag in the `<head>` of your document:
 
 > **Important**: This must be added **before** loading Alpine.js when using CDN links.
 
-### Manual (coming soon)
+### Manual
 
 If you wish to include Spruce with your own bundle:
 
 ```bash
 yarn add @ryangjchandler/spruce
+```
+
+or:
+
+```bash
+npm install @ryangjchandler/spruce --save
 ```
 
 Then add the following to your script:

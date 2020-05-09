@@ -72,6 +72,10 @@ const Spruce = {
         this.events.on(name, callback)
     },
 
+    off(name, callback) {
+        this.events.off(name, callback)
+    },
+
     emit(name, data = {}) {
         this.events.emit(name, { ...data, store: this.stores })
     },

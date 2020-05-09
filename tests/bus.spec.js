@@ -88,3 +88,19 @@ test('.watch() > can listen for changes to property', async () => {
     expect(fixture).toEqual('amazing')
     expect(oldFixture).toEqual('stuff')
 })
+
+test('.off() > can unregister listener', async () => {
+    let fixture = undefined;
+
+    const callback = () => {
+        fixture = 0
+    }
+
+    Spruce.on('fixture-event', callback)
+    
+    Spruce.off('fixture-event', callback)
+
+    Spruce.emit('fixture-event')
+
+    expect(fixture).toBeUndefined()
+})

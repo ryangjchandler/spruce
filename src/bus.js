@@ -11,6 +11,12 @@ export default {
         this.events[name].push(callback)
     },
 
+    off(name, callback) {
+        this.events[name] = this.events[name].filter(registerCallback => {
+            return registerCallback !== callback
+        })
+    },
+
     emit(name, data = {}) {
         if (this.events[name]) {
             this.events[name].forEach(callback => {

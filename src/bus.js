@@ -9,6 +9,14 @@ export default {
         }
 
         this.events[name].push(callback)
+
+        return () => this.off(name, callback)
+    },
+
+    off(name, callback) {
+        this.events[name] = this.events[name].filter(registerCallback => {
+            return registerCallback !== callback
+        })
     },
 
     emit(name, data = {}) {

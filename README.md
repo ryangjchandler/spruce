@@ -196,6 +196,22 @@ Spruce.on('init', ({ store }) => {
 })
 ```
 
+* `Spruce.off(eventName, callback)` - this can be used to unhook or de-register an event listener.
+
+```js
+var callback = () => {}
+
+Spruce.off('init', callback)
+```
+
+You can also unhook a listener using the function returned by `Spruce.on()`. This is especially useful for anonymous function callbacks.
+
+```js
+var off = Spruce.on('event', () => {})
+
+off()
+```
+
 * `Spruce.emit(eventName, data = {})` - this can be used to emit an event. The first argument should be the name of the event, the second should be an object containing data. This will be merged in with the core data, which consists of a `store` property. When emitting an event, a browser event will also be dispatched with a `spruce:` prefix.
 
 ```js

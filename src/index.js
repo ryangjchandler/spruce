@@ -78,6 +78,10 @@ const Spruce = {
         return this.events.on(name, callback)
     },
 
+    once(name, callback) {
+        return this.events.once(name, callback)
+    },
+
     off(name, callback) {
         this.events.off(name, callback)
     },

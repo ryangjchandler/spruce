@@ -34,6 +34,32 @@ test('.on() > listener can access store', () => {
     expect(fixture.store).toEqual(Spruce.stores)
 })
 
+/* Spruce.once() */
+
+test('.once() > can be used to register event listeners', () => {
+    Spruce.once('once', (event) => {})
+
+    expect(Spruce.events.events.hasOwnProperty('once')).toBeTruthy()
+})
+
+test('.once() > will unhook listener after first run', () => {
+    let fixture = 0
+
+    Spruce.once('once', (event) => {
+        fixture += 10
+    })
+
+    expect(fixture).toEqual(0)
+
+    Spruce.emit('once')
+
+    expect(fixture).toEqual(10)
+
+    Spruce.emit('once')
+
+    expect(fixture).toEqual(10)
+})
+
 /* Spruce.emit() */
 
 test('.emit() > will run registered listeners', () => {

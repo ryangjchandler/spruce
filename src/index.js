@@ -52,8 +52,6 @@ const Spruce = {
 
     reset: function (name, state) {
         this.stores[name] = state
-
-        this.updateSubscribers()
     },
 
     subscribe(el) {

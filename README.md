@@ -170,6 +170,22 @@ Spruce.store('application').name = 'Amazing Spruce Integration'
 
 This will trigger Alpine to re-evaluate your subscribed components and re-render.
 
+### Resetting global state
+
+A `Spruce.reset()` method is provided so that you can completely overwrite a global store:
+
+```javascript
+Spruce.store('application', {
+    name: 'Amazing Alpine Application'
+})
+
+Spruce.reset('application', {
+    name: 'Reset Application'
+})
+```
+
+Calling the `reset` method will make the new state reactive and cause subscribed components to re-render.
+
 ### Externally watching for changes
 
 You can register watchers in a similar fashion to Alpine. All you need is the full dot-notation representation of your piece of state and a callback.

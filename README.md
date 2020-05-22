@@ -219,6 +219,14 @@ Spruce.on('init', ({ store }) => {
 })
 ```
 
+* `Spruce.once(eventName, callback)` - this can be used to register an event listener that is only run **a single time**. This is useful for one time events, such as fetching HTML from the server when hovering over a button or similar.
+
+```js
+Spruce.once('event', () => {
+    // do something once...
+})
+```
+
 * `Spruce.off(eventName, callback)` - this can be used to unhook or de-register an event listener.
 
 ```js
@@ -226,6 +234,8 @@ var callback = () => {}
 
 Spruce.off('init', callback)
 ```
+
+> **Note**: When calling `Spruce.off()` directly, you **must** pass a named callback.
 
 You can also unhook a listener using the function returned by `Spruce.on()`. This is especially useful for anonymous function callbacks.
 

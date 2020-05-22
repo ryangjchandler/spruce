@@ -27,7 +27,7 @@ const Spruce = {
             set: (target, key, value, oldValue) => {
                 this.events.runWatchers(this.stores, target, key, oldValue)
 
-                this.updateSubscribers(key, value)
+                this.updateSubscribers()
             }
         })
 
@@ -50,13 +50,19 @@ const Spruce = {
         return this.stores[name]
     },
 
+    reset: function (name, state) {
+        this.stores[name] = state
+
+        this.updateSubscribers()
+    },
+
     subscribe(el) {
         this.subscribers.push(el)
 
         return this.stores
     },
 
-    updateSubscribers(key, value) {
+    updateSubscribers() {
         this.subscribers.forEach(el => {
             if (el.__x !== undefined) {
                 el.__x.updateElements(el)

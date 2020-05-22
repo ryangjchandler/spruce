@@ -3,26 +3,34 @@ export default {
 
     events: {},
 
-    on(name, callback) {
+    on(name, callback, once = false) {
         if (! this.events[name]) {
             this.events[name] = []
         }
 
-        this.events[name].push(callback)
+        this.events[name].push({ callback, once })
 
         return () => this.off(name, callback)
     },
 
+    once(name, callback) {
+        this.on(name, callback, true)
+    },
+
     off(name, callback) {
         this.events[name] = this.events[name].filter(registerCallback => {
-            return registerCallback !== callback
+            return registerCallback.callback !== callback && registerCallback.once !== true
         })
     },
 
     emit(name, data = {}) {
         if (this.events[name]) {
             this.events[name].forEach(callback => {
-                callback(data)
+                callback.callback(data)
+
+                if (callback.once) {
+                    this.off(name, callback)
+                }
             })
         }
 

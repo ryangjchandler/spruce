@@ -18,10 +18,11 @@ const Spruce = {
 
         this.emit('init')
 
-        document.querySelectorAll('[x-subscribe]').forEach(el => {
-            el.setAttribute('x-init', buildInitExpression(el))
-            el.removeAttribute('x-subscribe')
-        })
+        if ('Turbolinks' in window) {
+            document.addEventListener('turbolinks:render', this.attach)
+        }
+        
+        this.attach()
 
         this.stores = createObservable(this.stores, {
             set: (target, key, value, oldValue) => {
@@ -40,6 +41,13 @@ const Spruce = {
             
             window.$store = this.stores
         }
+    },
+
+    attach() {
+        document.querySelectorAll('[x-subscribe]').forEach(el => {
+            el.setAttribute('x-init', buildInitExpression(el))
+            el.removeAttribute('x-subscribe')
+        })
     },
 
     store: function (name, state) {

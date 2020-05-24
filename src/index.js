@@ -18,9 +18,7 @@ const Spruce = {
 
         this.emit('init')
 
-        if ('Turbolinks' in window) {
-            document.addEventListener('turbolinks:render', this.attach)
-        }
+        document.addEventListener('turbolinks:render', this.attach)
         
         this.attach()
 

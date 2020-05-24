@@ -17,10 +17,10 @@ const Spruce = {
         await domReady()
 
         this.emit('init')
-
-        document.addEventListener('turbolinks:render', this.attach)
         
         this.attach()
+
+        document.addEventListener('turbolinks:render', this.attach)
 
         this.stores = createObservable(this.stores, {
             set: (target, key, value, oldValue) => {

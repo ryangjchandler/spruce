@@ -116,7 +116,7 @@ export default Spruce
 **app.js**
 
 ```javascript
-import Store from './store'
+import './store'
 import 'alpinejs'
 ```
 

@@ -11,6 +11,7 @@
     "source": "src/index.js",
     "main": "dist/spruce.js",
     "umd:main": "dist/spruce.umd.js",
+    "module": "dist/spruce.module.js",
     "scripts": {
         "build": "microbundle",
         "watch": "microbundle watch",

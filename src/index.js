@@ -12,7 +12,7 @@ const Spruce = {
     start: async function () {
         await domReady()
 
-        this.emit('init')
+        this.emit('beforeMount')
         
         this.attach()
 
@@ -25,6 +25,8 @@ const Spruce = {
                 this.updateSubscribers()
             }
         })
+
+        this.emit('mounted')
     },
 
     attach() {

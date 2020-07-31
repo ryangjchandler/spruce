@@ -2,12 +2,9 @@ import Alpine from 'alpinejs'
 import Spruce from '../dist/spruce'
 import { waitFor } from '@testing-library/dom'
 
-beforeEach(() => {
-    Spruce.subscribers = []
-})
-
 beforeAll(() => {
     window.Spruce = Spruce
+    window.Alpine = Alpine
 })
 
 test('$store > data can be set inside component', async () => {

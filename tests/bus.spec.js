@@ -8,6 +8,7 @@ beforeEach(() => {
 
 beforeAll(() => {
     window.Spruce = Spruce
+    window.Alpine = Alpine
 })
 
 /* Spruce.on() */

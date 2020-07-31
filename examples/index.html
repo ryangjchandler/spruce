@@ -1,13 +1,14 @@
 <html>
-    <head>
+    <body>
+        <div x-data>
+            <p x-text="$store.application.name"></p>
+            <button @click="$store.application.name = 'amazing'">Update</button>
+        </div>
+        <div x-data>
+            <p x-text="$store.application.name + ' stuff'"></p>
+        </div>
         <script src="../dist/spruce.umd.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
-    </head>
-    <body>
-        <div x-data="{ stores: [] }" x-subscribe>
-            <span x-text="$store.application.name"></span>
-            <button @click="$store.application.name = 'Example'">Click</button>
-        </div>
         <script>
             Spruce.store('application', {
                 name: 'Application'

@@ -8,6 +8,7 @@ beforeEach(() => {
 
 beforeAll(() => {
     window.Spruce = Spruce
+    window.Alpine = Alpine
 })
 
 test('$store > data can be retrieved from store inside component', async () => {

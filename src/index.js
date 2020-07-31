@@ -1,65 +1,97 @@
-import { domReady, buildInitExpression } from './utils'
-import { createObservable } from './observable'
 import EventBus from './bus'
 
 const Spruce = {
     events: EventBus,
 
-    stores: {},
+    storesStack: {},
 
-    subscribers: [],
+    TARGET_ELEMENT_ID: '__spruce_store_target',
 
-    start: async function () {
-        await domReady()
-
+    start() {
         this.emit('beforeMount')
-        
-        this.attach()
-
-        document.addEventListener('turbolinks:render', this.attach)
-
-        this.stores = createObservable(this.stores, {
-            set: (target, key, value, oldValue) => {
-                this.events.runWatchers(this.stores, target, key, oldValue)
-
-                this.updateSubscribers()
-            }
-        })
-
-        this.emit('mounted')
+            .insertTargetElementIfNotExists()
+            .setupMagicProp()
+            .emit('mounted')
     },
 
-    attach() {
-        document.querySelectorAll('[x-subscribe]').forEach(el => {
-            el.setAttribute('x-init', buildInitExpression(el))
-            el.removeAttribute('x-subscribe')
-        })
-    },
-
-    store: function (name, state) {
-        if (! this.stores[name]) {
-            this.stores[name] = state
+    insertTargetElementIfNotExists() {
+        if (this.targetElement()) {
+            return this
         }
 
-        return this.stores[name]
+        const el = document.createElement('div')
+
+        el.id = this.TARGET_ELEMENT_ID
+        el.setAttribute('x-data', '{ stores: {}, subscribers: [] }')
+
+        document.body.insertBefore(el, document.body.firstChild)
+
+        return this
     },
 
-    reset: function (name, state) {
-        this.stores[name] = state
-    },
+    setupMagicProp() {
+        if (! window.Alpine) {
+            throw new Error('[Spruce] Alpine >= 2.5.0 is required.')
+        }
 
-    subscribe(el) {
-        this.subscribers.push(el)
+        window.Alpine.magicProperties['store'] = component => {
+            let subscribers = this.targetElement().__x.$data.subscribers
 
-        return this.stores
-    },
-
-    updateSubscribers() {
-        this.subscribers.forEach(el => {
-            if (el.__x !== undefined) {
-                el.__x.updateElements(el)
+            if (! subscribers.includes(component)) {
+                subscribers.push(component)
             }
-        })
+
+            if (Object.keys(this.storesStack).length > 0) {
+                Object.entries(this.storesStack).forEach(([name, store]) => {
+                    this.targetElement().__x.$data.stores[name] = store
+                })
+
+                this.storesStack = {}
+            }
+
+            return this.stores()
+        }
+
+        return this
+    },
+
+    targetElement() {
+        return document.getElementById(this.TARGET_ELEMENT_ID)
+    },
+
+    stores() {
+        const target = this.targetElement()
+    
+        if (! target) {
+            return false
+        }
+
+        return target.__x.$data.stores
+    },
+
+    store(name, state, force = false) {
+        console.log(name)
+        if (this.storesStack[name] && ! force) {
+            return this.storesStack[name]
+        }
+
+        if (! this.targetElement()) {
+            this.storesStack[name] = state
+
+            return this.storesStack[name]
+        }
+
+        let stores = this.stores()
+
+        if (! stores[name] || this.force) {
+            stores[name] = state
+        }
+
+        return stores[name]
+    },
+
+    reset(name, state) {
+        this.store(name, state, true)
     },
 
     on(name, callback) {
@@ -76,10 +108,16 @@ const Spruce = {
 
     emit(name, data = {}) {
         this.events.emit(name, { ...data, store: this.stores })
+
+        return this
     },
 
-    watch(dotNotation, callback) {
-        this.events.watch(dotNotation, callback)
+    watch(target, callback) {
+        if (! target.startsWith('stores.')) {
+            target = `stores.${target}`
+        }
+
+        this.targetElement().__x.$data.$watch(target, callback)
     }
 }
 

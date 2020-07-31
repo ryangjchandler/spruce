@@ -1,12 +1,8 @@
-import { domReady, buildInitExpression, isNullOrUndefined } from './utils'
+import { domReady, buildInitExpression } from './utils'
 import { createObservable } from './observable'
 import EventBus from './bus'
 
 const Spruce = {
-    options: {
-        globalStoreVariable: false,
-    },
-
     events: EventBus,
 
     stores: {},
@@ -29,16 +25,6 @@ const Spruce = {
                 this.updateSubscribers()
             }
         })
-
-        if (this.options.globalStoreVariable) {
-            document.querySelectorAll('[x-data]').forEach(el => {
-                if (! this.subscribers.includes(el)) {
-                    this.subscribers.push(el)
-                }
-            })
-            
-            window.$store = this.stores
-        }
     },
 
     attach() {
@@ -74,10 +60,6 @@ const Spruce = {
         })
     },
 
-    config(options = {}) {
-        this.options = Object.assign(this.options, options)
-    },
-
     on(name, callback) {
         return this.events.on(name, callback)
     },
@@ -99,7 +81,7 @@ const Spruce = {
     }
 }
 
-const deferrer = window.deferLoadingAlpine || function (callback) { callback() }
+const deferrer = window.deferLoadingAlpine || (callback => callback())
 
 window.deferLoadingAlpine = function (callback) {
     window.Spruce = Spruce

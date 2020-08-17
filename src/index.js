@@ -1,41 +1,42 @@
 import EventBus from './bus'
 
 const Spruce = {
+    el: null,
+
     events: EventBus,
 
     storesStack: {},
 
-    TARGET_ELEMENT_ID: '__spruce_store_target',
-
     start() {
+        this.guardAgainstAlpineMissing()
+
         this.emit('beforeMount')
             .insertTargetElementIfNotExists()
             .setupMagicProp()
             .emit('mounted')
     },
 
-    insertTargetElementIfNotExists() {
-        if (this.targetElement()) {
-            return this
+    guardAgainstAlpineMissing() {
+        if (!window.Alpine || window.Alpine.version < "2.5.0") {
+            throw new Error('[Spruce] Alpine v2.5.0 or greater is not installed');
         }
+    },
 
+    insertTargetElementIfNotExists() {
         const el = document.createElement('div')
 
-        el.id = this.TARGET_ELEMENT_ID
         el.setAttribute('x-data', '{ stores: {}, subscribers: [] }')
 
-        document.body.insertBefore(el, document.body.firstChild)
+        this.el = el
+
+        window.Alpine.initializeComponent(this.el)
 
         return this
     },
 
     setupMagicProp() {
-        if (! window.Alpine) {
-            throw new Error('[Spruce] Alpine >= 2.5.0 is required.')
-        }
-
-        window.Alpine.magicProperties['store'] = component => {
-            let subscribers = this.targetElement().__x.$data.subscribers
+        window.Alpine.addMagicProperty('store', component => {
+            let subscribers = this.el.__x.$data.subscribers
 
             if (! subscribers.includes(component)) {
                 subscribers.push(component)
@@ -43,39 +44,28 @@ const Spruce = {
 
             if (Object.keys(this.storesStack).length > 0) {
                 Object.entries(this.storesStack).forEach(([name, store]) => {
-                    this.targetElement().__x.$data.stores[name] = store
+                    this.el.__x.$data.stores[name] = store
                 })
 
                 this.storesStack = {}
             }
 
-            return this.stores()
-        }
+            return this.el.__x.$data.stores
+        })
 
         return this
     },
 
-    targetElement() {
-        return document.getElementById(this.TARGET_ELEMENT_ID)
-    },
-
     stores() {
-        const target = this.targetElement()
-    
-        if (! target) {
-            return false
-        }
-
-        return target.__x.$data.stores
+        return this.el.__x.$data.stores
     },
 
     store(name, state, force = false) {
-        console.log(name)
-        if (this.storesStack[name] && ! force) {
+        if (this.storesStack[name] && !force) {
             return this.storesStack[name]
         }
 
-        if (! this.targetElement()) {
+        if (! this.el) {
             this.storesStack[name] = state
 
             return this.storesStack[name]
@@ -83,7 +73,7 @@ const Spruce = {
 
         let stores = this.stores()
 
-        if (! stores[name] || this.force) {
+        if (!stores[name] || this.force) {
             stores[name] = state
         }
 
@@ -113,11 +103,11 @@ const Spruce = {
     },
 
     watch(target, callback) {
-        if (! target.startsWith('stores.')) {
+        if (!target.startsWith('stores.')) {
             target = `stores.${target}`
         }
 
-        this.targetElement().__x.$data.$watch(target, callback)
+        this.el.__x.$data.$watch(target, callback)
     }
 }
 

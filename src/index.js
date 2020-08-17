@@ -5,8 +5,6 @@ const Spruce = {
 
     events: EventBus,
 
-    storesStack: {},
-
     start() {
         this.guardAgainstAlpineMissing()
 
@@ -35,25 +33,21 @@ const Spruce = {
     },
 
     setupMagicProp() {
-        window.Alpine.addMagicProperty('store', component => {
-            let subscribers = this.el.__x.$data.subscribers
+        window.Alpine.addMagicProperty('store', function (component) {
+            let subscribers = Spruce.el.__x.$data.subscribers
 
             if (! subscribers.includes(component)) {
                 subscribers.push(component)
             }
 
-            if (Object.keys(this.storesStack).length > 0) {
-                Object.entries(this.storesStack).forEach(([name, store]) => {
-                    this.el.__x.$data.stores[name] = store
-                })
-
-                this.storesStack = {}
-            }
-
-            return this.el.__x.$data.stores
+            return Spruce.el.__x.$data.stores
         })
 
         return this
+    },
+
+    update() {
+        console.log('test')
     },
 
     stores() {
@@ -61,19 +55,9 @@ const Spruce = {
     },
 
     store(name, state, force = false) {
-        if (this.storesStack[name] && !force) {
-            return this.storesStack[name]
-        }
-
-        if (! this.el) {
-            this.storesStack[name] = state
-
-            return this.storesStack[name]
-        }
-
         let stores = this.stores()
 
-        if (!stores[name] || this.force) {
+        if (!stores[name] || force) {
             stores[name] = state
         }
 

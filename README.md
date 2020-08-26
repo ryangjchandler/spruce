@@ -124,15 +124,13 @@ import 'alpinejs'
 
 ### Subscribing your components
 
-To access the global state from your Alpine components, you can simply add the `x-subscribe` directive to your root component.
+Spruce hooks into Alpine using the "magic properties" API, meaning there are no extra steps needed. Start using the `$store` variable in your components right away.
 
 ``` html
-<div x-data="{}" x-subscribe>
+<div x-data="{}">
     <span x-text="$store.application.name"></span>
 </div>
 ```
-
-This directive adds a new `$store` magic variable to your component. This can be used to "get" and "set" data in your global store.
 
 ### Defining global state
 

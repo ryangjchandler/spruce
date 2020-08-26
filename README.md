@@ -1,6 +1,4 @@
-<p align="center">
-    <img src="./docs/example.png" width="50%" />
-</p>
+> Help to support the maintenance of this package by [sponsoring me](https://github.com/sponsors/ryangjchandler).
 
 # 🌲 Spruce
 

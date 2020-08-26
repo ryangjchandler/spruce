@@ -1,28 +1,19 @@
-import { isNullOrUndefined } from './utils'
+import { isNullOrUndefined, isObject } from './utils'
 
 export const createObservable = (target, callbacks) => {
     Object.keys(target).forEach(key => {
-        if (! isNullOrUndefined(target[key]) && Object.getPrototypeOf(target[key]) === Object.prototype) {
+        if (! isNullOrUndefined(target[key]) && isObject(target[key])) {
             target[key] = createObservable(target[key], callbacks)
         }
     })
 
     return new Proxy(target, {
-        get(target, key) {
-            if (callbacks.hasOwnProperty('get')) {
-                callbacks.get(key)
-            }
-            
-            return target[key]
-        },
         set(target, key, value) {
-            const old = target[key]
-
-            if (! isNullOrUndefined(value) && typeof value === 'object') {
+            if (! isNullOrUndefined(value) && isObject(value)) {
                 value = createObservable(value, callbacks)
             }
 
-            callbacks.set(target, key, target[key] = value, old)
+            callbacks.set(target, key, target[key] = value)
 
             return true
         }

@@ -8,6 +8,7 @@ beforeEach(() => {
 
 beforeAll(() => {
     window.Spruce = Spruce
+    window.Alpine = Alpine
 })
 
 /* Spruce.on() */
@@ -94,14 +95,12 @@ test('.emit() > will dispatch browser event to window with spruce: prefix', asyn
 
 test('.watch() > can listen for changes to property', async () => {
     let fixture = undefined
-    let oldFixture = undefined
     
     Spruce.store('example', {
         cool: 'stuff'
     })
 
-    Spruce.watch('example.cool', (previous, value) => {
-        oldFixture = previous
+    Spruce.watch('example.cool', (value) => {
         fixture = value
     })
 
@@ -112,7 +111,6 @@ test('.watch() > can listen for changes to property', async () => {
     Spruce.stores.example.cool = 'amazing'
 
     expect(fixture).toEqual('amazing')
-    expect(oldFixture).toEqual('stuff')
 })
 
 test('.off() > can unregister listener', () => {

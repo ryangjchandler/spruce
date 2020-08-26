@@ -15,13 +15,15 @@
     "scripts": {
         "build": "microbundle",
         "watch": "microbundle watch",
-        "test": "npx jest"
+        "test": "jest"
+    },
+    "dependencies": {
+        "alpinejs": "^2.5"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.9.5",
         "@testing-library/dom": "^7.2.2",
         "@testing-library/jest-dom": "^5.5.0",
-        "alpinejs": "^2.5",
         "jest": "^25.4.0",
         "jsdom-simulant": "^1.1.2",
         "microbundle": "^0.11.0",

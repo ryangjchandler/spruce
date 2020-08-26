@@ -1,5 +1,5 @@
 {
-    "name": "spruce.js",
+    "name": "@ryangjchandler/spruce",
     "description": "A lightweight state management layer for Alpine.js",
     "version": "1.0.0",
     "repository": {

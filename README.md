@@ -31,13 +31,13 @@ Include the following `<script>` tag in the `<head>` of your document:
 If you wish to include Spruce with your own bundle:
 
 ```bash
-yarn add sprucejs
+yarn add spruce.js
 ```
 
 or:
 
 ```bash
-npm install sprucejs --save
+npm install spruce.js --save
 ```
 
 Then add the following to your script:

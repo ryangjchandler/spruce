@@ -5,7 +5,9 @@
 A lightweight state management layer for Alpine.js
 
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/ryangjchandler/spruce?label=version&style=flat-square)
+
 ![GitHub file size in bytes](https://img.shields.io/github/size/ryangjchandler/spruce/dist/spruce.js?label=min%20%28no%20gzip%29&style=flat-square)
+
 [![](https://data.jsdelivr.com/v1/package/gh/ryangjchandler/spruce/badge)](https://www.jsdelivr.com/package/gh/ryangjchandler/spruce)
 
 ## About
@@ -18,7 +20,7 @@ Many large frameworks have their own state management solutions. One thing these
 
 Include the following `<script>` tag in the `<head>` of your document:
 
-```html
+``` html
 <script src="https://cdn.jsdelivr.net/gh/ryangjchandler/spruce@0.x.x/dist/spruce.umd.js"></script>
 ```
 
@@ -28,19 +30,19 @@ Include the following `<script>` tag in the `<head>` of your document:
 
 If you wish to include Spruce with your own bundle:
 
-```bash
+``` bash
 yarn add @ryangjchandler/spruce
 ```
 
 or:
 
-```bash
+``` bash
 npm install @ryangjchandler/spruce --save
 ```
 
 Then add the following to your script:
 
-```javascript
+``` javascript
 import Spruce from '@ryangjchandler/spruce'
 ```
 
@@ -48,34 +50,34 @@ import Spruce from '@ryangjchandler/spruce'
 
 To verify you have correctly installed Spruce, copy & paste the following code snippet into your project.
 
-```html
-<div x-data="{}" x-subscribe>
+``` html
+<div x-data>
     <div x-show="$store.modal.open === 'login'">
-    <p>
-      This "login" modal isn't built with a11y in mind, don't actually use it
-    </p>
+        <p>
+            This "login" modal isn't built with a11y in mind, don't actually use it
+        </p>
     </div>
 </div>
 
-<div x-data="{}" x-subscribe>
+<div x-data>
     <div x-show="$store.modal.open === 'register'">
-    <p>
-      This "register" modal isn't built with a11y in mind, don't actually use it
-    </p>
+        <p>
+            This "register" modal isn't built with a11y in mind, don't actually use it
+        </p>
     </div>
 </div>
 
-<div x-data="{}" x-subscribe>
-  <select x-model="$store.modal.open">
-    <option value="login" selected>login</option>
-    <option value="register">register</option>
-  </select>
+<div x-data>
+    <select x-model="$store.modal.open">
+        <option value="login" selected>login</option>
+        <option value="register">register</option>
+    </select>
 </div>
 
 <script>
-  Spruce.store('modal', {
-    open: 'login',
-  });
+    Spruce.store('modal', {
+        open: 'login',
+    });
 </script>
 ```
 
@@ -89,7 +91,7 @@ Spruce exposes less than a handful of possible interaction points. There is an e
 
 If you are using the CDN build, you can interact with Spruce using the `window.Spruce` variable:
 
-```html
+``` html
 <script>
     Spruce.store('modals', {
         open: 'login',
@@ -101,7 +103,7 @@ If you are importing Spruce into your own bundle, you can interact with it like 
 
 **store.js**
 
-```javascript
+``` javascript
 import Spruce from '@ryangjchandler/spruce'
 
 Spruce.store('modals', {
@@ -113,7 +115,7 @@ export default Spruce
 
 **app.js**
 
-```javascript
+``` javascript
 import './store'
 import 'alpinejs'
 ```
@@ -124,7 +126,7 @@ import 'alpinejs'
 
 To access the global state from your Alpine components, you can simply add the `x-subscribe` directive to your root component.
 
-```html
+``` html
 <div x-data="{}" x-subscribe>
     <span x-text="$store.application.name"></span>
 </div>
@@ -136,7 +138,7 @@ This directive adds a new `$store` magic variable to your component. This can be
 
 To define a piece of global state, you can use the `Spruce.store()` method:
 
-```javascript
+``` javascript
 Spruce.store('application', {
     name: 'Amazing Alpine Application'
 })
@@ -146,19 +148,19 @@ The first argument defines the top level property of the scope. The second argum
 
 To access the `name` property, you can do the following inside of your component:
 
-```html
+``` html
 <div x-data="{}" x-subscribe>
     <span x-text="$store.application.name"></span>
 </div>
 ```
 
-The `<span>` will now have "Amazing Alpine Application" set as its `innerText`.
+The `<span>` will now have "Amazing Alpine Application" set as its `innerText` .
 
 ### Modifying state from outside of Alpine
 
 You can modify your global state from external scripts using the `Spruce.store()` method too:
 
-```javascript
+``` javascript
 Spruce.store('application', {
     name: 'Amazing Alpine Application'
 })
@@ -172,7 +174,7 @@ This will trigger Alpine to re-evaluate your subscribed components and re-render
 
 A `Spruce.reset()` method is provided so that you can completely overwrite a global store:
 
-```javascript
+``` javascript
 Spruce.store('application', {
     name: 'Amazing Alpine Application'
 })
@@ -188,7 +190,7 @@ Calling the `reset` method will make the new state reactive and cause subscribed
 
 You can register watchers in a similar fashion to Alpine. All you need is the full dot-notation representation of your piece of state and a callback.
 
-```html
+``` html
 <script>
     Spruce.store('form', {
         name: 'Ryan',
@@ -196,9 +198,9 @@ You can register watchers in a similar fashion to Alpine. All you need is the fu
     })
 
     Spruce.watch('form.email', (old, next) => {
-        // do something with the values here
-    })
-<script>
+            // do something with the values here
+        }) <
+        script >
 ```
 
 In the above snippet, when we change the value of `form.email` either from a component or externally in a separate JavaScript file, our callback will be invoked and will receive the old value, as well as the new value. This can be useful for running automatic inline validation when a property changes, or triggering an action elsewhere in another component without the need for dispatching events.
@@ -209,17 +211,19 @@ In the above snippet, when we change the value of `form.email` either from a com
 
 Spruce ships with a basic event bus. It exposes two methods:
 
-* `Spruce.on(eventName, callback)` - this can be used to register an event listener. This will react to any internal events, such as `init`. Your callback will receive a single `detail` property which can any information from the event, as well as the global store.
+* `Spruce.on(eventName, callback)` - this can be used to register an event listener. This will react to any internal events, such as `init` . Your callback will receive a single `detail` property which can any information from the event, as well as the global store.
 
-```js
-Spruce.on('init', ({ store }) => {
+``` js
+Spruce.on('init', ({
+    store
+}) => {
     // do something with the store here...
 })
 ```
 
 * `Spruce.once(eventName, callback)` - this can be used to register an event listener that is only run **a single time**. This is useful for one time events, such as fetching HTML from the server when hovering over a button or similar.
 
-```js
+``` js
 Spruce.once('event', () => {
     // do something once...
 })
@@ -227,7 +231,7 @@ Spruce.once('event', () => {
 
 * `Spruce.off(eventName, callback)` - this can be used to unhook or de-register an event listener.
 
-```js
+``` js
 var callback = () => {}
 
 Spruce.off('init', callback)
@@ -235,9 +239,9 @@ Spruce.off('init', callback)
 
 > **Note**: When calling `Spruce.off()` directly, you **must** pass a named callback.
 
-You can also unhook a listener using the function returned by `Spruce.on()`. This is especially useful for anonymous function callbacks.
+You can also unhook a listener using the function returned by `Spruce.on()` . This is especially useful for anonymous function callbacks.
 
-```js
+``` js
 var off = Spruce.on('event', () => {})
 
 off()
@@ -245,13 +249,15 @@ off()
 
 * `Spruce.emit(eventName, data = {})` - this can be used to emit an event. The first argument should be the name of the event, the second should be an object containing data. This will be merged in with the core data, which consists of a `store` property. When emitting an event, a browser event will also be dispatched with a `spruce:` prefix.
 
-```js
-Spruce.emit('event-name', { foo: 'bar' })
+``` js
+Spruce.emit('event-name', {
+    foo: 'bar'
+})
 ```
 
 In the example above, a `spruce:event-name` event will be fired on the `window` level, so you could register an event listener inside of your Alpine component:
 
-```html
+``` html
 <div x-data @spruce:event-name.window="foo = $event.detail.store.foo">
 </div>
 ```
@@ -260,7 +266,7 @@ In the example above, a `spruce:event-name` event will be fired on the `window` 
 
 Alpine offers a Config API. Using this API, you can enable an experimental global `$store` variable that is declared on the `window` object. This means your components do not need to manually "subscribe" to state changes:
 
-```html
+``` html
 <script>
     Spruce.config({
         globalStoreVariable: true

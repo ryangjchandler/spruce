@@ -8,6 +8,7 @@ beforeEach(() => {
 
 beforeAll(() => {
     window.Spruce = Spruce
+    window.Alpine = Alpine
 })
 
 test('.reset() > will overwrite existing properties', () => {

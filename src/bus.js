@@ -50,11 +50,11 @@ export default {
         this.watchers[dotNotation].push(callback)
     },
 
-    runWatchers(stores, target, key, oldValue) {
+    runWatchers(stores, target, key, value) {
         const self = this
 
         if (self.watchers[key]) {
-            return self.watchers[key].forEach(callback => callback(oldValue, target[key]))
+            return self.watchers[key].forEach(callback => callback(value))
         }
 
         Object.keys(self.watchers)
@@ -66,7 +66,7 @@ export default {
 
                 dotNotationParts.reduce((comparison, part) => {
                     if (comparison[key] === target[key] || Object.is(target, comparison)) {
-                        self.watchers[fullDotNotationKey].forEach(callback => callback(oldValue, target[key]))
+                        self.watchers[fullDotNotationKey].forEach(callback => callback(value))
                     }
 
                     return comparison[part]

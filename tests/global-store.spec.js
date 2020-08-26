@@ -8,16 +8,7 @@ beforeEach(() => {
 
 beforeAll(() => {
     window.Spruce = Spruce
-})
-
-test('$store > is available as global object', async () => {
-    Spruce.config({ globalStoreVariable: true })
-
-    expect(Spruce.options.globalStoreVariable).toBeTruthy()
-
-    await Spruce.start()
-
-    expect(window.$store).toEqual(Spruce.stores)
+    window.Alpine = Alpine
 })
 
 test('$store > can be used inside of component without subscribing', async () => {

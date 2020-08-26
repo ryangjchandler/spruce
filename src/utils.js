@@ -21,3 +21,7 @@ export const buildInitExpression = el => {
 export const isNullOrUndefined = value => {
     return value === null || value === undefined
 }
+
+export const isObject = _ => {
+    return Object.getPrototypeOf(_) === Object.prototype
+}

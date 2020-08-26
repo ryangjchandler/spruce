@@ -1207,10 +1207,10 @@ alphanum-sort@^1.0.0, alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
-alpinejs@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/alpinejs/-/alpinejs-2.3.1.tgz#350b79b226fff35f026b70a631dde63a56142ea1"
-  integrity sha512-jkASU7vSv4rwTWLsH5kS+NxRw3D2dMhLigfXk88xPifkYWaKyGFMHzQtyCHUh3lDwTvPYCsLCvmPLZHtKgXFng==
+alpinejs@^2.5:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/alpinejs/-/alpinejs-2.6.0.tgz#0ff340e51e632fa4ed25f1c4ee0ce2515bd77491"
+  integrity sha512-4cW3zU17JIYzq6uS3asozwKIMVe5A7wrIfn3o0SNsH1YZ4D3cR2Cs+YThvf4dU3/O7EBzExBY4Dhd8LjtCnEqA==
 
 ansi-escapes@^4.2.1:
   version "4.3.1"

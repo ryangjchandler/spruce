@@ -25,3 +25,5 @@ export const isNullOrUndefined = value => {
 export const isObject = _ => {
     return Object.getPrototypeOf(_) === Object.prototype
 }
+
+export const isArray = _ => Array.isArray(_)

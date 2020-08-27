@@ -41,3 +41,26 @@ test('createObservable > will run callback on set trap', () => {
 
     expect(fixture).toEqual(100)
 })
+
+test('createObservable > will run set trap for Array.* methods', () => {
+    let target = {
+        items: [
+            'foo',
+            'bar'
+        ],
+    }
+
+
+    let fixture
+
+    let observable = createObservable(target, {
+        set() {
+            fixture = 'baz'
+        }
+    })
+
+    observable.items.push('baz')
+
+    expect(target.items).toContain('baz')
+    expect(fixture).toEqual('baz')
+})

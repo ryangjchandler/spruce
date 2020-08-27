@@ -1,9 +1,9 @@
-import { isNullOrUndefined, isObject } from './utils'
+import { isNullOrUndefined, isObject, isArray } from './utils'
 
 export const createObservable = (target, callbacks) => {
-    Object.keys(target).forEach(key => {
-        if (! isNullOrUndefined(target[key]) && isObject(target[key])) {
-            target[key] = createObservable(target[key], callbacks)
+    Object.entries(target).forEach(([key, value]) => {
+        if (! isNullOrUndefined(value) && (isObject(value) || isArray(value))) {
+            target[key] = createObservable(value, callbacks)
         }
     })
 

@@ -24,15 +24,13 @@ export default {
     },
 
     emit(name, data = {}) {
-        if (this.events[name]) {
-            this.events[name].forEach(callback => {
-                callback.callback(data)
+        (this.events[name] || []).forEach(callback => {
+            callback.callback(data)
 
-                if (callback.once) {
-                    this.off(name, callback)
-                }
-            })
-        }
+            if (callback.once) {
+                this.off(name, callback)
+            }
+        })
 
         window.dispatchEvent(new CustomEvent(`spruce:${name}`, {
             detail: data,

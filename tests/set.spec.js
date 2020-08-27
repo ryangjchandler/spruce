@@ -34,3 +34,31 @@ test('$store > data can be set inside component', async () => {
         expect(document.querySelector('span').innerText).toEqual('car')
     })
 })
+
+test('$store > array data causes DOM updates', async () => {
+    document.body.innerHTML = `
+        <div x-data>
+            <template x-for="item in $store.todo.todos">
+                <p x-text="item"></p>
+            </template>
+            <button @click="$store.todo.todos.push('foo')"></button>
+        </div>
+    `
+
+    Spruce.store('todo', {
+        todos: []
+    })
+
+    await Spruce.start()
+    
+    Alpine.start()
+
+    expect(document.querySelector('p')).toBeFalsy()
+
+    document.querySelector('button').click()
+
+    await waitFor(() => {
+        expect(document.querySelector('p')).toBeTruthy()
+        expect(document.querySelector('p').innerText).toEqual('foo')
+    })
+})

@@ -1,4 +1,4 @@
-> ✨ Help to support the maintenance of this package by [sponsoring me](https://github.com/sponsors/ryangjchandler).
+> ✨ Help support the maintenance of this package by [sponsoring me](https://github.com/sponsors/ryangjchandler).
 
 # 🌲 Spruce
 

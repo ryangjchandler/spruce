@@ -8,16 +8,6 @@ export const domReady = () => {
     })
 }
 
-export const buildInitExpression = el => {
-    let expression = "$store = Spruce.subscribe($el)"
-
-    if (el.hasAttribute('x-init')) {
-        expression = `${expression}; ${el.getAttribute('x-init')}`
-    }
-
-    return expression
-}
-
 export const isNullOrUndefined = value => {
     return value === null || value === undefined
 }

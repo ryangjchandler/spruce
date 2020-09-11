@@ -182,21 +182,6 @@ Spruce.reset('application', {
 
 Calling the `reset` method will make the new state reactive and cause subscribed components to re-render.
 
-### Externally watching for changes
-
-You can register watchers in a similar fashion to Alpine. All you need is the full dot-notation representation of your piece of state and a callback.
-
-```js
-Spruce.store('form', {
-    name: 'Ryan',
-    email: 'support@ryangjchandler.co.uk'
-})
-
-Spruce.watch('form.email', (old, next) => {
-    // do something with the values here
-})
-```
-
 In the above snippet, when we change the value of `form.email` either from a component or externally in a separate JavaScript file, our callback will be invoked and will receive the old value, as well as the new value. This can be useful for running automatic inline validation when a property changes, or triggering an action elsewhere in another component without the need for dispatching events.
 
 > **Note**: you can get stuck in an watch loop if you're updating other store properties that also have watchers defined.

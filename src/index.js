@@ -1,4 +1,4 @@
-import { domReady } from './utils'
+import { domReady, getMethods } from './utils'
 import { createObservable } from './observable'
 
 const Spruce = {
@@ -26,9 +26,7 @@ const Spruce = {
                 this.updateSubscribers()
 
                 this.disableReactivity = true
-
                 this.persisted.forEach(this.updateLocalStorage.bind(this))
-
                 this.disableReactivity = false
             }
         })
@@ -50,9 +48,11 @@ const Spruce = {
 
     store(name, state, persist = false) {
         if (persist) {
-            this.stores[name] = this.retrieveFromLocalStorage(name)
+            this.stores[name] = this.retrieveFromLocalStorage(name, getMethods(state))
 
-            this.persisted.push(name)
+            if (! this.persisted.includes(name)) {
+                this.persisted.push(name)
+            }
         }
 
         if (! this.stores[name]) {
@@ -80,33 +80,14 @@ const Spruce = {
         })
     },
 
-    retrieveFromLocalStorage(name) {
+    retrieveFromLocalStorage(name, methods = {}) {
         const storage = JSON.parse(window.localStorage.getItem(`__spruce:${name}`))
 
-        if (! storage) {
-            return null
-        }
-
-        return storage
+        return storage ? Object.assign(methods, storage) : null
     },
 
     updateLocalStorage(name) {
-        window.localStorage.setItem(
-            `__spruce:${name}`,
-            JSON.stringify(this.store(name))
-        )
-    },
-
-    persist(name) {
-        if (! this.persisted.includes(name)) {
-            this.persisted.push(name)
-        }
-
-        this.updateLocalStorage(name)
-    },
-
-    dontPersist(name) {
-        this.persisted = this.persisted.filter(_ => name !== _)
+        window.localStorage.setItem(`__spruce:${name}`, JSON.stringify(this.store(name)))
     }
 }
 

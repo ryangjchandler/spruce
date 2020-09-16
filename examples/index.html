@@ -12,6 +12,9 @@
         <div x-data>
             <code>Persisted</code>
             <input type="text" x-model="$store.persisted.example">
+            <button type="button" @click="$store.persisted.method()">
+                Call method on persisted store
+            </button>
         </div>
 
         <script>
@@ -23,7 +26,10 @@
             })
 
             Spruce.store('persisted', {
-                example: 'Hello'
+                example: 'Hello',
+                method() {
+                    console.log('test')
+                }
             }, true)
         </script>
     </body>

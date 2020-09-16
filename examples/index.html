@@ -6,12 +6,31 @@
     <body>
         <div x-data>
             <span x-text="$store.application.name"></span>
-            <button @click="$store.application.name = 'Example'">Click</button>
+            <button @click="$store.application.toggle()">Click</button>
         </div>
+
+        <div x-data>
+            <code>Persisted</code>
+            <input type="text" x-model="$store.persisted.example">
+            <button type="button" @click="$store.persisted.method()">
+                Call method on persisted store
+            </button>
+        </div>
+
         <script>
             Spruce.store('application', {
-                name: 'Application'
+                name: 'Application',
+                toggle() {
+                    this.name = ['Application', 'Example'][Math.floor(Math.random() * 2)]
+                }
             })
+
+            Spruce.store('persisted', {
+                example: 'Hello',
+                method() {
+                    console.log('test')
+                }
+            }, true)
         </script>
     </body>
 </html>

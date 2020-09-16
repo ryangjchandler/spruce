@@ -17,3 +17,11 @@ export const isObject = _ => {
 }
 
 export const isArray = _ => Array.isArray(_)
+
+export const getMethods = obj => {
+    let methods = {}
+
+    Object.entries(obj).filter(([key, value]) => typeof value === 'function').forEach(([key, value]) => methods[key] = value)
+
+    return methods
+}

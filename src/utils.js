@@ -21,11 +21,7 @@ export const isArray = _ => Array.isArray(_)
 export const getMethods = obj => {
     let methods = {}
 
-    Object.entries(obj).forEach(([key, value]) => {
-        if (typeof value === 'function') {
-            methods[key] = value
-        }
-    })
+    Object.entries(obj).filter(([key, value]) => typeof value === 'function').forEach(([key, value]) => methods[key] = value)
 
     return methods
 }

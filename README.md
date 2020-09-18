@@ -254,7 +254,7 @@ In the example above, a `spruce:event-name` event will be fired on the `window` 
 
 ## Versioning
 
-This projects follow the [Semantic Versioning](https://semver.org/) guidelines. This means that there *could* be breaking changes on minor version changes, up until v1.x is reached.
+This project follow the [Semantic Versioning](https://semver.org/) guidelines. This means that there *could* be breaking changes on minor version changes, up until v1.x is reached.
 
 For example, 0.1 -> 0.2 might introduce a breaking change.
 

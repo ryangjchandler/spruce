@@ -2,7 +2,7 @@
 
 # 🌲 Spruce
 
-A lightweight state management layer for Alpine.js
+A lightweight global state management layer for Alpine.js
 
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/ryangjchandler/spruce?label=version&style=flat-square)
 ![GitHub file size in bytes](https://img.shields.io/github/size/ryangjchandler/spruce/dist/spruce.js?label=min%20%28no%20gzip%29&style=flat-square)

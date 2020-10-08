@@ -46,7 +46,7 @@ jobs:
         run: npm version $RELEASE_VERSION
 
       - name: Push changed files to master
-        run: git push origin HEAD:master
+        run: git push origin HEAD:1.x
 
       - name: Recreate tag
         run: git tag -f $RELEASE_VERSION

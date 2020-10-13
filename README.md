@@ -15,7 +15,7 @@ A lightweight global state management layer for Alpine.js
 Include the following `<script>` tag in the `<head>` of your document:
 
 ``` html
-<script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/spruce@1.x.x/dist/spruce.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/spruce@2.x.x/dist/spruce.umd.js"></script>
 ```
 
 > **Important**: This must be added **before** loading Alpine.js when using CDN links.

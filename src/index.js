@@ -24,7 +24,13 @@ const Spruce = {
                 this.updateSubscribers()
 
                 this.disableReactivity = true
-                this.persisted.forEach(this.updateLocalStorage.bind(this))
+
+                try {
+                    this.persisted.forEach(this.updateLocalStorage.bind(this))    
+                } catch (e) {
+                    // Do nothing here (thanks Safari!)
+                }
+                
                 this.disableReactivity = false
             }
         })
@@ -46,10 +52,14 @@ const Spruce = {
 
     store(name, state, persist = false) {
         if (persist) {
-            this.stores[name] = this.retrieveFromLocalStorage(name, getMethods(state))
+            try {
+                this.stores[name] = this.retrieveFromLocalStorage(name, getMethods(state))
 
-            if (! this.persisted.includes(name)) {
-                this.persisted.push(name)
+                if (! this.persisted.includes(name)) {
+                    this.persisted.push(name)
+                }
+            } catch (e) {
+                // Do nothing here (thanks Safari!)
             }
         }
 

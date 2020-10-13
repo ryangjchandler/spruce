@@ -197,6 +197,37 @@ In the above snippet, when we change the value of `form.email` either from a com
 
 > **Note**: you can get stuck in an watch loop if you're updating other store properties that also have watchers defined.
 
+### Persisting stores
+
+You can persist the state of a global store between page loads using [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) by passing a third boolean argument to the `Spruce.store()` method.
+
+```js
+Spruce.store('form', {
+    name: 'Ryan',
+    email: 'support@ryangjchandler.co.uk'
+}, true)
+```
+
+When the `form` store is updated, any changes will be persisted to `__spruce:form` key in local storage.
+
+> **Note**: some browsers will disable access to local storage when browsing in private mode.
+
+**Persisted stores with methods**
+
+Stores that contain methods can still be persisted. These methods cannot be JSON-serialized, so will be re-added to the data that was retrieved from local storage.
+
+```js
+Spruce.store('form', {
+    name: 'Ryan',
+    email: 'support@ryangjchandler.co.uk',
+    logName() {
+        console.log(this.name)
+    }
+}, true)
+
+Spruce.store('form').logName() // logs `Ryan` to console.
+```
+
 ## Versioning
 
 This project follows the [Semantic Versioning](https://semver.org/) guidelines. This means that there *could* be breaking changes on minor version changes, up until v1.x is reached.

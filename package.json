@@ -1,7 +1,7 @@
 {
     "name": "@ryangjchandler/spruce",
     "description": "A lightweight state management layer for Alpine.js",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "repository": {
         "type": "git",
         "url": "git@github.com/ryangjchandler/spruce"

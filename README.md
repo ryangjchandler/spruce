@@ -2,15 +2,11 @@
 
 # 🌲 Spruce
 
-A lightweight state management layer for Alpine.js
+A lightweight global state management layer for Alpine.js
 
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/ryangjchandler/spruce?label=version&style=flat-square)
 ![GitHub file size in bytes](https://img.shields.io/github/size/ryangjchandler/spruce/dist/spruce.js?label=min%20%28no%20gzip%29&style=flat-square)
 [![Monthly downloads via CDN](https://data.jsdelivr.com/v1/package/gh/ryangjchandler/spruce/badge)](https://www.jsdelivr.com/package/gh/ryangjchandler/spruce)
-
-## About
-
-Many large frameworks have their own state management solutions. One thing these libraries have in common is a higher level of complexity and a wide range of API interactions. Since Alpine.js is designed to be a simpler and lighter alternative to larger frameworks such as Vue and React, shouldn't the state management solution be as simple, if not simpler, too?
 
 ## Installation
 
@@ -182,13 +178,28 @@ Spruce.reset('application', {
 
 Calling the `reset` method will make the new state reactive and cause subscribed components to re-render.
 
-In the above snippet, when we change the value of `form.email` either from a component or externally in a separate JavaScript file, our callback will be invoked and will receive the old value, as well as the new value. This can be useful for running automatic inline validation when a property changes, or triggering an action elsewhere in another component without the need for dispatching events.
+### Externally watching for changes
+
+You can register watchers in a similar fashion to Alpine. All you need is the full dot-notation representation of your piece of state and a callback.
+
+```js
+Spruce.store('form', {
+    name: 'Ryan',
+    email: 'support@ryangjchandler.co.uk'
+})
+
+Spruce.watch('form.email', value => {
+    // do something with the new value here
+})
+```
+
+In the above snippet, when we change the value of `form.email` either from a component or externally in a separate JavaScript file, our callback will be invoked and will receive the new value. This can be useful for running automatic inline validation when a property changes, or triggering an action elsewhere in another component without the need for dispatching events.
 
 > **Note**: you can get stuck in an watch loop if you're updating other store properties that also have watchers defined.
 
 ## Versioning
 
-This projects follow the [Semantic Versioning](https://semver.org/) guidelines. This means that there *could* be breaking changes on minor version changes, up until v1.x is reached.
+This project follows the [Semantic Versioning](https://semver.org/) guidelines. This means that there *could* be breaking changes on minor version changes, up until v1.x is reached.
 
 For example, 0.1 -> 0.2 might introduce a breaking change.
 

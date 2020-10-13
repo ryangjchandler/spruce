@@ -15,8 +15,6 @@ const Spruce = {
         
         this.attach()
 
-        document.addEventListener('turbolinks:render', this.attach)
-
         this.stores = createObservable(this.stores, {
             set: () => {
                 if (this.disableReactivity) {

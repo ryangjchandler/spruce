@@ -25,9 +25,9 @@ const Spruce = {
 
                 this.updateSubscribers()
 
-                this.disableReactivity = true
-
                 this.runWatchers(this.stores, target, key, value)
+
+                this.disableReactivity = true
 
                 try {
                     this.persisted.forEach(this.updateLocalStorage.bind(this))

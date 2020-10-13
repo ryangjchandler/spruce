@@ -31,6 +31,14 @@
                     console.log('test')
                 }
             }, true)
+
+            Spruce.watch('application.name', () => {
+                Spruce.store('persisted').example = 'World';
+            });
+
+            Spruce.watch('persisted.example', () => {
+                console.log('World!');
+            })
         </script>
     </body>
 </html>

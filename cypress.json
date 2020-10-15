@@ -1,0 +1,7 @@
+{
+    "video": false,
+    "pluginsFile": false,
+    "supportFile": "tests/cypress/bootstrap.js",
+    "integrationFolder": "tests/cypress/integration",
+    "baseUrl": "http://127.0.0.1:8080"
+}

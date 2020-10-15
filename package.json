@@ -15,7 +15,9 @@
     "scripts": {
         "build": "microbundle",
         "watch": "microbundle watch",
-        "test": "jest"
+        "test": "jest",
+        "pre-cypress": "http-server",
+        "cypress": "start-server-and-test 'http-server -c-1 --silent' 8080 'npx cypress run'"
     },
     "dependencies": {
         "alpinejs": "^2.5"
@@ -24,9 +26,12 @@
         "@babel/preset-env": "^7.9.5",
         "@testing-library/dom": "^7.2.2",
         "@testing-library/jest-dom": "^5.5.0",
+        "cypress": "^5.4.0",
+        "http-server": "^0.12.3",
         "jest": "^25.4.0",
         "jsdom-simulant": "^1.1.2",
         "microbundle": "^0.11.0",
-        "observable-membrane": "^0.26.1"
+        "observable-membrane": "^0.26.1",
+        "start-server-and-test": "^1.11.5"
     }
 }

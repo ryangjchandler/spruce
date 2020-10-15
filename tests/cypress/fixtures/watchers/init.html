@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <script src="/dist/spruce.umd.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"></script>
+    </head>
+    <body>
+        <p x-data x-text="$store.persisted.foo"></p>
+        <button x-data @click="$store.persisted.foo = 'car'"></button>
+        <span x-data x-text="$store.persisted.bar"></span>
+
+        <script>
+            Spruce.store('persisted', {
+                foo: 'bar',
+                bar: 'boo'
+            }, true)
+
+            Spruce.watch('persisted.foo', () => {
+                Spruce.store('persisted').bar = 'bop'
+            })
+        </script>
+    </body>
+</html>

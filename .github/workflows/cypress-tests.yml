@@ -3,7 +3,7 @@ name: Run Jest tests
 on: [pull_request]
 
 jobs:
-  tests:
+  cypress_tests:
 
     runs-on: ubuntu-latest
 

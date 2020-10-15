@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <script src="/dist/spruce.umd.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"></script>
+    </head>
+    <body>
+        <div x-data>
+            <p x-text="$store.persisted.foo"></p>
+            <button @click="$store.persisted.foo = 'car'"></button>
+        </div>
+
+        <script>
+            Spruce.store('persisted', {
+                foo: 'bar'
+            }, true)
+        </script>
+    </body>
+</html>

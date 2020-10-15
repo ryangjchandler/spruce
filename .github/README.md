@@ -227,7 +227,6 @@ Spruce.store('form', {
 
 Spruce.store('form').logName() // logs `Ryan` to console.
 ```
-k
 ## Versioning
 
 This project follows the [Semantic Versioning](https://semver.org/) guidelines.

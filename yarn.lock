@@ -2145,7 +2145,7 @@ common-tags@^1.8.0:
   resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.0.tgz#8e3153e542d4a39e9b10554434afaaf98956a937"
   integrity sha512-6P6g0uetGpW/sdyUy/iQQCbFF0kWVMSIVSyYz7Zgjcgh8mgw8PQzDNZeyZ5DQ2gM7LBoZPHmnjz8rUthkBG5tw==
 
-compare-versions@^3.6.0:
+compare-versions@3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-3.6.0.tgz#1a5689913685e5a87637b8d3ffca75514ec41d62"
   integrity sha512-W6Af2Iw1z4CB7q4uU4hv646dW9GQuBM+YpC0UvUCWSD8w90SJjp+ujJuXaEMtAXBtSqGfMPuFOVn4/+FlaqfBA==

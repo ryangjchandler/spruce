@@ -1,3 +1,5 @@
+import compareVersions from 'compare-versions'
+
 export const domReady = () => {
     return new Promise(resolve => {
         if (document.readyState == "loading") {
@@ -32,5 +34,13 @@ export const isTesting = () => {
 }
 
 export const checkForAlpine = () => {
-    return isTesting() || (! window.Alpine || ! compareVersions.compare(window.Alpine.version, '2.7.0', '>='))
+    if (isTesting()) {
+        return true
+    }
+
+    if (! window.Alpine) {
+        return false
+    }
+
+    return compareVersions.compare(window.Alpine.version, '2.7.0', '>=')
 }

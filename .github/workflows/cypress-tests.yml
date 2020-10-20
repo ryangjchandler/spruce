@@ -1,4 +1,4 @@
-name: Run Jest tests
+name: Run Cypress tests
 
 on: [pull_request]
 

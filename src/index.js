@@ -1,5 +1,6 @@
 import { domReady, getMethods } from './utils'
 import { createObservable } from './observable'
+import compareVersions from 'compare-versions';
 
 const Spruce = {
     stores: {},
@@ -41,7 +42,7 @@ const Spruce = {
     },
 
     attach() {
-        if (!window.Alpine) {
+        if (!window.Alpine || ! compareVersions.compare(window.Alpine.version, '2.7.0', '>=')) {
             throw new Error('[Spruce] You must be using Alpine >= 2.5.0 to use Spruce.')
         }
 

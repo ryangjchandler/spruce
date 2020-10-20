@@ -25,3 +25,12 @@ export const getMethods = obj => {
 
     return methods
 }
+
+export const isTesting = () => {
+    return navigator.userAgent, navigator.userAgent.includes("Node.js")
+        || navigator.userAgent.includes("jsdom")
+}
+
+export const checkForAlpine = () => {
+    return isTesting() || (! window.Alpine || ! compareVersions.compare(window.Alpine.version, '2.7.0', '>='))
+}

@@ -1,3 +1,5 @@
+<p align="center"><img src="/art/header.png?1" alt="spruce header"></p>
+
 > ✨ Help support the maintenance of this package by [sponsoring me](https://github.com/sponsors/ryangjchandler).
 
 # 🌲 Spruce
@@ -227,6 +229,14 @@ Spruce.store('form', {
 
 Spruce.store('form').logName() // logs `Ryan` to console.
 ```
+
+## Credits
+
+- [Ryan Chandler](https://github.com/ryangjchandler)
+- [All contributors](https://github.com/ryangjchandler/spruce/contributors)
+
+Special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
+
 ## Versioning
 
 This project follows the [Semantic Versioning](https://semver.org/) guidelines.

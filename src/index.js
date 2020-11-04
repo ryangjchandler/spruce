@@ -1,10 +1,13 @@
 import { domReady, getMethods, checkForAlpine } from './utils'
 import { createObservable } from './observable'
+import { localStorage } from './drivers'
 
 const Spruce = {
     stores: {},
 
     persisted: [],
+
+    driver: localStorage,
 
     subscribers: [],
 
@@ -30,7 +33,7 @@ const Spruce = {
                 this.disableReactivity = true
 
                 try {
-                    this.persisted.forEach(this.updateLocalStorage.bind(this))
+                    this.persisted.forEach(name => this.driver.set(name, this.store(name)))
                 } catch (e) {
                     // Do nothing here (thanks Safari!)
                 }
@@ -57,7 +60,7 @@ const Spruce = {
     store(name, state, persist = false) {
         if (persist) {
             try {
-                this.stores[name] = this.retrieveFromLocalStorage(name, getMethods(state))
+                this.stores[name] = this.driver.get(name, getMethods(state))
 
                 if (!this.persisted.includes(name)) {
                     this.persisted.push(name)
@@ -90,16 +93,6 @@ const Spruce = {
         this.subscribers.filter(el => !!el.__x).forEach(el => {
             el.__x.updateElements(el)
         })
-    },
-
-    retrieveFromLocalStorage(name, methods = {}) {
-        const storage = JSON.parse(window.localStorage.getItem(`__spruce:${name}`))
-
-        return storage ? Object.assign(methods, storage) : null
-    },
-
-    updateLocalStorage(name) {
-        window.localStorage.setItem(`__spruce:${name}`, JSON.stringify(this.store(name)))
     },
 
     watch(name, callback) {

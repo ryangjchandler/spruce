@@ -26,13 +26,14 @@
         "@babel/preset-env": "^7.9.5",
         "@testing-library/dom": "^7.2.2",
         "@testing-library/jest-dom": "^5.5.0",
+        "compare-versions": "3.6.0",
         "cypress": "^5.4.0",
         "http-server": "^0.12.3",
+        "idb-keyval": "^3.2.0",
         "jest": "^25.4.0",
         "jsdom-simulant": "^1.1.2",
         "microbundle": "^0.11.0",
         "observable-membrane": "^0.26.1",
-        "start-server-and-test": "^1.11.5",
-        "compare-versions": "3.6.0"
+        "start-server-and-test": "^1.11.5"
     }
 }

@@ -25,6 +25,10 @@ Special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 
 This project follows the [Semantic Versioning](https://semver.org/) guidelines.
 
+## Security
+
+Please refer to [SECURITY.md](.github/SECURITY.md) for more information.
+
 ## License
 
 Copyright (c) 2020 Ryan Chandler and contributors

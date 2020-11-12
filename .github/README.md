@@ -27,7 +27,7 @@ This project follows the [Semantic Versioning](https://semver.org/) guidelines.
 
 ## Security
 
-Please refer to [SECURITY.md](.github/SECURITY.md) for more information.
+Please refer to [SECURITY.md](SECURITY.md) for more information.
 
 ## License
 

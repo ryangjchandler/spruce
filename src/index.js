@@ -135,13 +135,7 @@ const Spruce = {
     }
 }
 
-const deferrer = window.deferLoadingAlpine || function (callback) { callback() }
-
-window.deferLoadingAlpine = function (callback) {
-    window.Spruce = Spruce
-    window.Spruce.start()
-
-    deferrer(callback)
-}
+window.Spruce = Spruce
+window.Spruce.start()
 
 export default Spruce

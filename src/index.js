@@ -1,4 +1,4 @@
-import { domReady, getMethods, checkForAlpine } from './utils'
+import { getMethods, checkForAlpine } from './utils'
 import { createObservable } from './observable'
 
 const Spruce = {
@@ -12,9 +12,7 @@ const Spruce = {
 
     disableReactivity: false,
 
-    async start() {
-        await domReady()
-
+    start() {
         this.attach()
 
         this.stores = createObservable(this.stores, {
@@ -136,6 +134,13 @@ const Spruce = {
 }
 
 window.Spruce = Spruce
-window.Spruce.start()
+
+const deferrer = window.deferLoadingAlpine || function (callback) { callback() }
+
+window.deferLoadingAlpine = function (callback) {
+    window.Spruce.start()
+
+    deferrer(callback)
+}
 
 export default Spruce

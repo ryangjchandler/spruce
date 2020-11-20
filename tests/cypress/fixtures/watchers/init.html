@@ -1,12 +1,13 @@
 <html>
     <head>
-        <script src="/dist/spruce.umd.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
     </head>
     <body>
         <p x-data x-text="$store.persisted.foo"></p>
         <button x-data @click="$store.persisted.foo = 'car'"></button>
         <span x-data x-text="$store.persisted.bar"></span>
+
+        <script src="/dist/spruce.umd.js"></script>
 
         <script>
             Spruce.store('persisted', {

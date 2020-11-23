@@ -33,3 +33,25 @@ test('Spruce.store() > existing namespace will not be overwritten', () => {
         foo: 'bar'
     })
 })
+
+test('Spruce.store() > can be used with functions that generate stores', () => {
+    Spruce.store('testing', function () {
+        return {
+            foo: 'bar'
+        }
+    })
+
+    expect(Spruce.store('testing')).toEqual({
+        foo: 'bar'
+    })
+
+    Spruce.store('testing', function () {
+        return {
+            bar: 'car'
+        }
+    })
+
+    expect(Spruce.store('testing')).toEqual({
+        foo: 'bar'
+    })
+})

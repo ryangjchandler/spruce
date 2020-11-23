@@ -53,6 +53,10 @@ const Spruce = {
     },
 
     store(name, state, persist = false) {
+        if (typeof state === 'function') {
+            state = state()
+        }
+        
         if (persist) {
             try {
                 this.stores[name] = this.retrieveFromLocalStorage(name, getMethods(state))

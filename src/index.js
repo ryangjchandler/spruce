@@ -139,11 +139,15 @@ const Spruce = {
     },
 
     persistUsing(driver) {
-        if (driver.getItem === undefined) {
+        if (this.persisted.length > 0) {
+            console.warn('[Spruce] You have already initialised a persisted store. Changing the driver may cause issues.')
+        }
+
+        if (typeof driver.getItem !== 'function') {
             throw new Error('[Spruce] The persistence driver must have a `getItem(key)` method.')
         }
 
-        if (driver.setItem === undefined) {
+        if (typeof driver.setItem !== 'function') {
             throw new Error('[Spruce] The persistence driver must have a `setItem(key, value)` method.')
         }
 

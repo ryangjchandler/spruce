@@ -136,6 +136,18 @@ const Spruce = {
                     return comparison[part]
                 }, stores)
             })
+    },
+
+    persistUsing(driver) {
+        if (driver.getItem === undefined) {
+            throw new Error('[Spruce] The persistence driver must have a `getItem(key)` method.')
+        }
+
+        if (driver.setItem === undefined) {
+            throw new Error('[Spruce] The persistence driver must have a `setItem(key, value)` method.')
+        }
+
+        this.persistenceDriver = driver
     }
 }
 

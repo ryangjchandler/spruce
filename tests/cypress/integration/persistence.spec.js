@@ -20,6 +20,19 @@ describe('persisted stores', () => {
         cy.get('p').should('have.text', 'car')
     })
 
+    it('should persist data between visits using a custom driver', () => {
+        cy.visit('/tests/cypress/fixtures/persistence/check-persisted.html')
+
+        cy.get('p').should('have.text', 'bar')
+
+        cy.get('button').click()
+        cy.get('p').should('have.text', 'car')
+
+        cy.reload()
+
+        cy.get('p').should('have.text', 'car')
+    })
+
     it('should be able to call store methods when persisted', () => {
         cy.visit('/tests/cypress/fixtures/persistence/store-methods.html')
 

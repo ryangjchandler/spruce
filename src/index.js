@@ -14,7 +14,13 @@ const Spruce = {
 
     disableReactivity: false,
 
+    startingCallbacks: [],
+
+    startedCallbacks: [],
+
     start() {
+        this.startingCallbacks.forEach(fn => fn())
+
         this.attach()
 
         this.stores = createObservable(this.stores, {
@@ -38,6 +44,16 @@ const Spruce = {
                 this.disableReactivity = false
             }
         })
+
+        this.startedCallbacks.forEach(fn => fn())
+    },
+
+    starting(callback) {
+        this.startingCallbacks.push(callback)
+    },
+
+    started(callback) {
+        this.startedCallbacks.push(callback)
     },
 
     attach() {

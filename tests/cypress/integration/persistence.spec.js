@@ -1,4 +1,4 @@
-/* global describe, it, cy */
+/// <reference types="cypress" />
 
 describe('persisted stores', () => {
     it('should not fail when persisted store is initialised', () => {
@@ -8,6 +8,19 @@ describe('persisted stores', () => {
     })
 
     it('should persist data between visits', () => {
+        cy.visit('/tests/cypress/fixtures/persistence/check-persisted.html')
+
+        cy.get('p').should('have.text', 'bar')
+
+        cy.get('button').click()
+        cy.get('p').should('have.text', 'car')
+
+        cy.reload()
+
+        cy.get('p').should('have.text', 'car')
+    })
+
+    it('should persist data between visits using a custom driver', () => {
         cy.visit('/tests/cypress/fixtures/persistence/check-persisted.html')
 
         cy.get('p').should('have.text', 'bar')

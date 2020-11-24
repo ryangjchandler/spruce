@@ -1,4 +1,4 @@
-/* global describe, it, cy */
+/// <reference types="cypress" />
 
 describe('persisted stores', () => {
     it('should not fail when persisted store is initialised', () => {

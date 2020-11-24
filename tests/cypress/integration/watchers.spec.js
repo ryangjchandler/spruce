@@ -1,4 +1,4 @@
-/* global describe, it, cy */
+/// <reference types="cypress" />
 
 describe('watchers', () => {
     it('can watch for changes on a store', () => {

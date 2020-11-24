@@ -4,6 +4,8 @@ import { createObservable } from './observable'
 const Spruce = {
     stores: {},
 
+    persistenceDriver: window.localStorage,
+
     persisted: [],
 
     subscribers: [],
@@ -95,13 +97,13 @@ const Spruce = {
     },
 
     retrieveFromLocalStorage(name, methods = {}) {
-        const storage = JSON.parse(window.localStorage.getItem(`__spruce:${name}`))
+        const storage = JSON.parse(this.persistenceDriver.getItem(`__spruce:${name}`))
 
         return storage ? Object.assign(methods, storage) : null
     },
 
     updateLocalStorage(name) {
-        window.localStorage.setItem(`__spruce:${name}`, JSON.stringify(this.store(name)))
+        this.persistenceDriver.setItem(`__spruce:${name}`, JSON.stringify(this.store(name)))
     },
 
     watch(name, callback) {

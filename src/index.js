@@ -113,9 +113,19 @@ const Spruce = {
     },
 
     retrieveFromLocalStorage(name, methods = {}) {
-        const storage = JSON.parse(this.persistenceDriver.getItem(`__spruce:${name}`))
+        const value = this.persistenceDriver.getItem(`__spruce:${name}`)
 
-        return storage ? Object.assign(methods, storage) : null
+        if (! value) {
+            return null
+        }
+
+        let storage = JSON.parse(value)
+
+        if (typeof storage === 'object') {
+            storage = Object.assign(methods, storage)
+        }
+
+        return storage
     },
 
     updateLocalStorage(name) {

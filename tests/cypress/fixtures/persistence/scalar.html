@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+    </head>
+    <body>
+        <div x-data>
+            <p x-text="$store.colorScheme"></p>
+            <button @click="$store.colorScheme = 'dark'"></button>
+        </div>
+
+        <script src="/dist/spruce.umd.js"></script>
+
+        <script>
+            Spruce.store('colorScheme', 'light', true)
+        </script>
+    </body>
+</html>

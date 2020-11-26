@@ -16,6 +16,16 @@
             </button>
         </div>
 
+        <div x-data>
+            <input type="radio" name="colorScheme" x-model="$store.colorScheme" value="light">
+            Light
+
+            <input type="radio" name="colorScheme" x-model="$store.colorScheme" value="dark">
+            Dark
+
+            <p x-text="$store.colorScheme"></p>
+        </div>
+
         <script src="../dist/spruce.umd.js"></script>
 
         <script>
@@ -32,6 +42,8 @@
                     console.log('test')
                 }
             }, true)
+
+            Spruce.store('colorScheme', 'light', true)
 
             Spruce.watch('application.name', () => {
                 Spruce.store('persisted').example = 'World';

@@ -1,5 +1,5 @@
 {
-    "video": false,
+    "video": true,
     "pluginsFile": false,
     "supportFile": "tests/cypress/bootstrap.js",
     "integrationFolder": "tests/cypress/integration",

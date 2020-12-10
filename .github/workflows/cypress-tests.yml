@@ -15,10 +15,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
+      - name: Cache NPM packagees
+        uses: actions/cache@v1
+        id: NPM
+        with:
+          path: node_modules
+          key: npm-cache-${{ hashFiles('yarn.lock') }}
+
+      - name: Cache Cypress
+        uses: actions/cache@v1
+        id: cypress
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-${{ hashFiles('yarn.lock') }}
+
       - name: Run Cypress
         uses: cypress-io/github-action@v2
         with:
-          build: yarn build
+          install: false
           start: yarn pre-cypress
           browser: chrome
           

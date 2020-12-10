@@ -29,13 +29,11 @@ jobs:
           path: ~/.cache/Cypress
           key: cypress-cache-${{ hashFiles('yarn.lock') }}
 
-      - name: Start server
-        run: nohup yarn pre-cypress > server.log 2>&1 &
-
       - name: Run Cypress
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
+          start: yarn pre-cypress
           
       - name: Cypress screenshots
         uses: actions/upload-artifact@v1

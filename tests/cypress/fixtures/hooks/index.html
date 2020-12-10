@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+    </head>
+    <body>
+        <div x-data>
+            <span x-text="$store.foo.bar"></span>
+        </div>
+
+        <script src="/dist/spruce.umd.js"></script>
+
+        <script>
+            window.starting = 0;
+            window.started = 0;
+
+            Spruce.starting(() => window.starting++)
+
+            Spruce.store('foo', { bar: 'car' })
+
+            Spruce.started(() => window.started++)
+        </script>
+    </body>
+</html>

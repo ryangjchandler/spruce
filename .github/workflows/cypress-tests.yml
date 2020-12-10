@@ -32,7 +32,6 @@ jobs:
       - name: Run Cypress
         uses: cypress-io/github-action@v2
         with:
-          install: false
           start: yarn pre-cypress
           browser: chrome
           

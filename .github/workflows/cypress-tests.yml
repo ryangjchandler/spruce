@@ -30,7 +30,7 @@ jobs:
           key: cypress-cache-${{ hashFiles('yarn.lock') }}
 
       - name: Start server
-        run: yarn pre-cypress
+        run: nohup yarn pre-cypress > server.log 2>&1 &
 
       - name: Run Cypress
         uses: cypress-io/github-action@v2

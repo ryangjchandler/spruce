@@ -52,6 +52,14 @@
             Spruce.watch('persisted.example', () => {
                 console.log('World!');
             })
+
+            Spruce.starting(function () {
+                console.log('starting up...')
+            })
+
+            Spruce.started(function () {
+                console.log('started...')
+            })
         </script>
     </body>
 </html>

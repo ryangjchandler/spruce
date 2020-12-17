@@ -141,6 +141,8 @@ const Spruce = {
     },
 
     runWatchers(stores, target, key, value) {
+        key = target['__key_name'] || key
+
         const self = this
 
         if (self.watchers[key]) {

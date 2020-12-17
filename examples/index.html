@@ -26,6 +26,19 @@
             <p x-text="$store.colorScheme"></p>
         </div>
 
+        <div x-data>
+            <input type="text" x-model="$store.todo.new">
+            <button @click="$store.todo.add($store.todo.new)">
+                Add Todo
+            </button>
+
+            <ul>
+                <template x-for="todo in $store.todo.todos">
+                    <li x-text="todo"></li>
+                </template>
+            </ul>
+        </div>
+
         <script src="../dist/spruce.umd.js"></script>
 
         <script>
@@ -45,6 +58,14 @@
 
             Spruce.store('colorScheme', 'light', true)
 
+            Spruce.store('todo', {
+                new: '',
+                todos: [],
+                add(todo) {
+                    this.todos.push(todo)
+                }
+            })
+
             Spruce.watch('application.name', () => {
                 Spruce.store('persisted').example = 'World';
             });
@@ -59,6 +80,10 @@
 
             Spruce.started(function () {
                 console.log('started...')
+            })
+
+            Spruce.watch('todo.todos', function () {
+                console.log('Added todo')
             })
         </script>
     </body>

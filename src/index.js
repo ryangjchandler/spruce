@@ -176,6 +176,10 @@ const Spruce = {
         }
     },
 
+    toggle(name) {
+        return this.set(name, ! this.get(name))
+    },
+
     watch(name, callback) {
         if (! this.hasStarted) {
             this.watchers[name] || (this.watchers[name] = [])

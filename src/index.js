@@ -156,6 +156,26 @@ const Spruce = {
         return name.split('.').reduce((target, part) => target[part], this.stores)
     },
 
+    set(name, value, target) {
+        if (! target) {
+            target = this.stores
+        }
+
+        if (! isArray(name)) {
+            name = name.split('.')
+        }
+
+        if (name.length === 1) return target[name[0]] = value
+
+        if (target[name[0]]) {
+            return this.set(name.slice(1), value, target[name[0]])
+        } else {
+            target[name[0]] = {}
+
+            return this.set(name.slice(1), value, target[name[0]])
+        }
+    },
+
     watch(name, callback) {
         if (! this.hasStarted) {
             this.watchers[name] || (this.watchers[name] = [])

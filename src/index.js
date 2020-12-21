@@ -26,6 +26,13 @@ const Spruce = {
         this.attach()
 
         this.stores = createObservable(this.stores, {
+            get: (target, key, receiver) => {
+                if (['get', 'set', 'toggle', 'clear'].includes(key)) {
+                    return this[key].bind(this)
+                }
+
+                return Reflect.get(target, key, receiver)
+            },
             set: (target, key, value, receiver) => {
                 if (this.disableReactivity) {
                     return
@@ -152,15 +159,11 @@ const Spruce = {
         this.persistenceDriver.setItem(`__spruce:${name}`, JSON.stringify(this.store(name)))
     },
 
-    get(name) {
-        return name.split('.').reduce((target, part) => target[part], this.stores)
+    get(name, target = this.stores) {
+        return name.split('.').reduce((target, part) => target[part], target)
     },
 
-    set(name, value, target) {
-        if (! target) {
-            target = this.stores
-        }
-
+    set(name, value, target = this.stores) {
         if (! isArray(name)) {
             name = name.split('.')
         }

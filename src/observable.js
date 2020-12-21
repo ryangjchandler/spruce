@@ -8,6 +8,9 @@ export const createObservable = (target, callbacks) => {
     })
 
     return new Proxy(target, {
+        get(target, key, receiver) {
+            return callbacks.get(target, key, receiver)
+        },
         set(target, key, value, receiver) {
             if (! isNullOrUndefined(value) && isObject(value)) {
                 value = createObservable(value, callbacks)

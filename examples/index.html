@@ -43,6 +43,11 @@
             <input type="text" x-model="$store.user.name">
         </div>
 
+        <div x-data>
+            <input type="checkbox" x-model="$store.toggled.on">
+            <button @click="Spruce.toggle('toggled.on')">Toggle checkbox</button>
+        </div>
+
         <script src="../dist/spruce.umd.js"></script>
 
         <script>
@@ -59,6 +64,10 @@
                     console.log('test')
                 }
             }, true)
+
+            Spruce.store('toggled', {
+                on: true
+            })
 
             Spruce.store('colorScheme', 'light', true)
 

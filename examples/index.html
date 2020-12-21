@@ -39,6 +39,10 @@
             </ul>
         </div>
 
+        <div x-data>
+            <input type="text" x-model="$store.user.name">
+        </div>
+
         <script src="../dist/spruce.umd.js"></script>
 
         <script>
@@ -64,6 +68,14 @@
                 add(todo) {
                     this.todos.push(todo)
                 }
+            })
+
+            Spruce.store('user', {
+                name: 'Ryan'
+            })
+
+            Spruce.watch('user', () => {
+                console.log('User changed.')
             })
 
             Spruce.watch('application.name', () => {

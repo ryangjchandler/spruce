@@ -1,4 +1,4 @@
-import { getMethods, checkForAlpine, isObject, isArray } from './utils'
+import { getMethods, checkForAlpine, isObject, isArray, isNullOrUndefined } from './utils'
 import { createObservable } from './observable'
 
 const Spruce = {
@@ -170,7 +170,7 @@ const Spruce = {
         const target = nameParts.reduce((target, part) => {
             const sub = target[part]
 
-            if (isObject(sub) || isArray(sub)) {
+            if (! isNullOrUndefined(sub) && (isObject(sub) || isArray(sub))) {
                 return sub
             }
 

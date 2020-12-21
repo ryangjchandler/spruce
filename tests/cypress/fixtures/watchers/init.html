@@ -17,6 +17,12 @@
             <span data-todo-label x-text="$store.todoLabel.test"></span>
         </div>
 
+        <div x-data>
+            <button data-change-name @click.prevent="$store.user.name = 'Bob'">
+                Change user name
+            </button>
+        </div>
+
         <script src="/dist/spruce.umd.js"></script>
 
         <script>
@@ -36,12 +42,20 @@
                 bar: 'boo'
             }, true)
 
+            Spruce.store('user', {
+                name: 'Ryan'
+            })
+
             Spruce.watch('todo.todos', () => {
                 Spruce.store('todoLabel').test = 'Yay!'
             })
 
             Spruce.watch('persisted.foo', () => {
                 Spruce.store('persisted').bar = 'bop'
+            })
+
+            Spruce.watch('user', () => {
+                Spruce.store('todoLabel').test = 'Changed!'
             })
         </script>
     </body>

@@ -75,7 +75,7 @@
             })
 
             Spruce.watch('user', () => {
-                console.log('User changed.')
+                Spruce.store('persisted').example = 'Woop!'
             })
 
             Spruce.watch('application.name', () => {

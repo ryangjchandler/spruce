@@ -45,7 +45,7 @@
 
         <div x-data>
             <input type="checkbox" x-model="$store.toggled.on">
-            <button @click="Spruce.toggle('toggled.on')">Toggle checkbox</button>
+            <button @click="$store.toggle('toggled.on')">Toggle checkbox</button>
         </div>
 
         <script src="../dist/spruce.umd.js"></script>

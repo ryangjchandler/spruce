@@ -7,7 +7,7 @@
 A lightweight global state management layer for Alpine.js
 
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/ryangjchandler/spruce?label=version&style=flat-square)
-![GitHub file size in bytes](https://img.shields.io/github/size/ryangjchandler/spruce/dist/spruce.js?label=min%20%28no%20gzip%29&style=flat-square)
+![Build size Brotli](https://img.badgesize.io/ryangjchandler/spruce/master/dist/spruce.umd.js.svg?compression=gzip&style=flat-square&color=green)
 [![Monthly downloads via CDN](https://data.jsdelivr.com/v1/package/gh/ryangjchandler/spruce/badge)](https://www.jsdelivr.com/package/gh/ryangjchandler/spruce)
 
 ## Documentation

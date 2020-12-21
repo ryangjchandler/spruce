@@ -180,6 +180,10 @@ const Spruce = {
         return this.set(name, ! this.get(name))
     },
 
+    clear(name) {
+        return this.persistenceDriver.removeItem(`__spruce:${name}`)
+    },
+
     watch(name, callback) {
         if (! this.hasStarted) {
             this.watchers[name] || (this.watchers[name] = [])
@@ -248,6 +252,10 @@ const Spruce = {
 
         if (typeof driver.setItem !== 'function') {
             throw new Error('[Spruce] The persistence driver must have a `setItem(key, value)` method.')
+        }
+
+        if (typeof driver.removeItem !== 'function') {
+            throw new Error('[Spruce] The persistence driver must have a `removeItem(name)` method.')
         }
 
         this.persistenceDriver = driver

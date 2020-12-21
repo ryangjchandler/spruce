@@ -1,4 +1,4 @@
-import { getMethods, checkForAlpine } from './utils'
+import { getMethods, checkForAlpine, isObject, isArray, isNullOrUndefined } from './utils'
 import { createObservable } from './observable'
 
 const Spruce = {
@@ -18,20 +18,22 @@ const Spruce = {
 
     startedCallbacks: [],
 
+    hasStarted: false,
+
     start() {
         this.startingCallbacks.forEach(fn => fn())
 
         this.attach()
 
         this.stores = createObservable(this.stores, {
-            set: (target, key, value) => {
+            set: (target, key, value, receiver) => {
                 if (this.disableReactivity) {
                     return
                 }
 
                 this.updateSubscribers()
 
-                this.runWatchers(this.stores, target, key, value)
+                this.runWatchers(target, key, value, receiver)
 
                 this.disableReactivity = true
 
@@ -44,6 +46,16 @@ const Spruce = {
                 this.disableReactivity = false
             }
         })
+
+        this.hasStarted = true
+
+        this.disableReactivity = true
+
+        Object.entries(this.watchers).forEach(([name, callbacks]) => {
+            callbacks.forEach(callback => this.watch(name, callback))
+        })
+
+        this.disableReactivity = false
 
         this.startedCallbacks.forEach(fn => fn())
     },
@@ -123,47 +135,82 @@ const Spruce = {
 
         if (typeof storage === 'object') {
             storage = Object.assign(methods, storage)
+
+            delete storage.__watchers
+            delete storage.__key_name
         }
 
         return storage
     },
 
     updateLocalStorage(name) {
+        const store = this.store(name)
+
+        delete store.__watchers
+        delete store.__key_name
+
         this.persistenceDriver.setItem(`__spruce:${name}`, JSON.stringify(this.store(name)))
     },
 
-    watch(name, callback) {
-        if (!this.watchers[name]) {
-            this.watchers[name] = []
-        }
-
-        this.watchers[name].push(callback)
+    get(name) {
+        return name.split('.').reduce((target, part) => target[part], this.stores)
     },
 
-    runWatchers(stores, target, key, value) {
-        key = target['__key_name'] || key
+    watch(name, callback) {
+        if (! this.hasStarted) {
+            this.watchers[name] || (this.watchers[name] = [])
 
-        const self = this
+            this.watchers[name].push(callback)
 
-        if (self.watchers[key]) {
-            return self.watchers[key].forEach(callback => callback(value))
+            return
         }
 
-        Object.keys(self.watchers)
-            .filter(watcher => watcher.includes('.'))
-            .forEach(fullDotNotationKey => {
-                let dotNotationParts = fullDotNotationKey.split('.')
+        const nameParts = name.split('.')
 
-                if (key !== dotNotationParts[dotNotationParts.length - 1]) return
+        const target = nameParts.reduce((target, part) => {
+            const sub = target[part]
 
-                dotNotationParts.reduce((comparison, part) => {
-                    if (comparison[key] === target[key] || Object.is(target, comparison)) {
-                        self.watchers[fullDotNotationKey].forEach(callback => callback(value))
-                    }
+            if (! isNullOrUndefined(sub) && (isObject(sub) || isArray(sub))) {
+                return sub
+            }
 
-                    return comparison[part]
-                }, stores)
-            })
+            return target
+        }, this.stores)
+
+        /**
+         * If the target object / array is the property
+         * that needs to be watched, a magic `__self` key is
+         * used so that runner can pick up on it later.
+         */
+        const part = Object.is(target, this.get(name)) ? '__self' : nameParts[nameParts.length - 1]
+
+        if (! target.__watchers) {
+            target.__watchers = new Map
+        }
+        
+        if (! target.__watchers.has(part)) {
+            target.__watchers.set(part, new Set)
+        }
+
+        target.__watchers.get(part).add(callback)
+    },
+
+    runWatchers(target, key, value) {
+        if (! target.__watchers) {
+            return
+        }
+
+        if (target.__watchers.has(key)) {
+            target.__watchers.get(key).forEach(f => f(value))
+        }
+
+        /**
+         * The `__self` key is used for watchers that are registered
+         * to the object or array being updated.
+         */
+        if (target.__watchers.has('__self')) {
+            target.__watchers.get('__self').forEach(f => f(value, key))
+        }
     },
 
     persistUsing(driver) {

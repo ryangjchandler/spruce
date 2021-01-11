@@ -14,6 +14,8 @@
                 </template>
             </ul>
             <button data-add-todo @click="$store.todo.add('Example')">Add Todo</button>
+            <button data-reset-todo-label @click="$store.todoLabel.test = 'Yes!'">Reset Todo Label</button>
+            <button data-reset-todos @click="$store.todo.todos = []">Reset Todos</button>
             <span data-todo-label x-text="$store.todoLabel.test"></span>
         </div>
 

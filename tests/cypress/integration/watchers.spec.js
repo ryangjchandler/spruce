@@ -20,6 +20,14 @@ describe('watchers', () => {
         cy.get('[data-todo-item]').should('have.length', 1)
         cy.get('[data-todo-label]').should('have.text', 'Yay!')
 
+        cy.get('[data-reset-todo-label]').click()
+        cy.get('[data-todo-label]').should('have.text', 'Yes!')
+
+        cy.get('[data-reset-todos]').click()
+
+        cy.get('[data-todo-item]').should('have.length', 0)
+        cy.get('[data-todo-label]').should('have.text', 'Yay!')
+
         cy.get('[data-change-name]').click()
 
         cy.get('[data-todo-label]').should('have.text', 'Changed!')

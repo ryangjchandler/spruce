@@ -12,11 +12,20 @@ export const createObservable = (target, callbacks) => {
             return callbacks.get(target, key, receiver)
         },
         set(target, key, value, receiver) {
-            if (! isNullOrUndefined(value) && isObject(value)) {
+            if (! isNullOrUndefined(value) && (isObject(value) || isArray(value))) {
                 value = createObservable(value, callbacks)
             }
 
-            callbacks.set(target, key, target[key] = value, receiver)
+            let originalValue = target[key]
+
+            target[key] = value
+
+            // Copy watchers from the original value if they exist
+            if (!isNullOrUndefined(originalValue) && !isNullOrUndefined(originalValue.__watchers)) {
+                target[key].__watchers = originalValue.__watchers
+            }
+
+            callbacks.set(target, key, target[key], receiver)
 
             return true
         }

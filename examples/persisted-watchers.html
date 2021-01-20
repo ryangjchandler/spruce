@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+    </head>
+    <body>
+        <button x-data @click="$store.test.enabled = !$store.test.enabled">
+            Toggle
+        </button>
+        <script src="/dist/spruce.umd.js"></script>
+
+        <script>
+            Spruce.store('test', {
+                enabled: false,
+            }, true);
+
+            Spruce.watch('test.enabled', function (enabled) {
+                console.log(enabled)
+            });
+        </script>
+    </body>
+</html>

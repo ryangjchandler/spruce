@@ -27,7 +27,7 @@ const Spruce = {
 
         this.stores = createObservable(this.stores, {
             get: (target, key, receiver) => {
-                if (['get', 'set', 'toggle', 'clear'].includes(key)) {
+                if (Object.is(receiver, this.stores) && ['get', 'set', 'toggle', 'clear'].includes(key)) {
                     return this[key].bind(this)
                 }
 

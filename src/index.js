@@ -155,7 +155,7 @@ const Spruce = {
     },
 
     updateLocalStorage(name) {
-        const store = this.store(name)
+        const store = { ...this.store(name) }
 
         delete store.__watchers
         delete store.__key_name

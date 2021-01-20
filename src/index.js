@@ -114,17 +114,6 @@ const Spruce = {
     },
 
     reset(name, state) {
-        // This line is needed to ensure any watchers on
-        // the store itself are run when reset.
-        this.runWatchers(this.stores[name], '__self', state)
-
-        // This conditional will take any existing watchers on
-        // the store being reset and apply them back to the new
-        // state (see issue #105).
-        if (! state['__watchers']) {
-            state['__watchers'] = this.stores[name].__watchers
-        }
-        
         this.stores[name] = state
     },
 
@@ -242,7 +231,7 @@ const Spruce = {
             return
         }
 
-        if (target.__watchers.has(key) && key !== '__self') {
+        if (target.__watchers.has(key)) {
             target.__watchers.get(key).forEach(f => f(value))
         }
 

@@ -114,6 +114,10 @@ const Spruce = {
     },
 
     reset(name, state) {
+        if (! this.stores[name]) {
+            return;
+        }
+        
         this.stores[name] = state
     },
 

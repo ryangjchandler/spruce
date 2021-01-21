@@ -13,7 +13,9 @@
                 enabled: false,
             }, true);
 
-            Spruce.watch('test.enabled', function (enabled) {
+            Spruce.watch('test', () => {})
+
+            const [unwatch] = Spruce.watch('test.enabled', function (enabled) {
                 console.log(enabled)
             });
         </script>

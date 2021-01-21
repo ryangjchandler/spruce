@@ -255,6 +255,28 @@ const Spruce = {
         watchers.get(part).delete(callback)
     },
 
+    watchers(name) {
+        const nameParts = name.split('.')
+
+        const target = nameParts.reduce((target, part) => {
+            const sub = target[part]
+
+            if (! isNullOrUndefined(sub) && (isObject(sub) || isArray(sub))) {
+                return sub
+            }
+
+            return target
+        }, this.stores)
+
+        const part = Object.is(target, this.get(name)) ? '__self' : nameParts[nameParts.length - 1]
+
+        if (! target.__watchers) {
+            return {}
+        }
+
+        return target.__watchers.get(part)
+    },
+
     runWatchers(target, key, value) {
         if (! target.__watchers) {
             return

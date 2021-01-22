@@ -13,6 +13,8 @@ jobs:
             Hi there. I'm testing some of this stuff.
 
             This should have multiple lines in Twitter. Cool.
+
+            Now I'm testing mentions, hey @alexfwulf!
           consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}

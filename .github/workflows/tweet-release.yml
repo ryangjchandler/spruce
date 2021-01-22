@@ -9,7 +9,10 @@ jobs:
     steps:
       - uses: ethomson/send-tweet-action@v1
         with:
-          status: "Hi, this is a test!"
+          status: >
+            Hi there. I'm testing some of this stuff.
+
+            This should have multiple lines in Twitter. Cool.
           consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}

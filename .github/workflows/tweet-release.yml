@@ -1,6 +1,6 @@
 name: Tweet release
 
-on: [release]
+on: [release, workflow_dispatch]
 
 jobs:
   tweet-release:

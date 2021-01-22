@@ -1,6 +1,8 @@
 name: Tweet release
 
-on: [release, workflow_dispatch]
+on: 
+  release:
+    types: [published]
 
 jobs:
   tweet-release:
@@ -10,11 +12,9 @@ jobs:
       - uses: ethomson/send-tweet-action@v1
         with:
           status: >
-            Hi there. I'm testing some of this stuff.
+            ✨ I've just released ${{ github.event.release.tag_name }} of Spruce, the global state management library for Alpine.js.\n
 
-            This should have multiple lines in Twitter. Cool.
-
-            Now I'm testing mentions, hey @alexfwulf!
+            Check out the release notes here: https://github.com/ryangjchandler/spruce/releases/tag/${{ github.event.release.tag_name }}
           consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}

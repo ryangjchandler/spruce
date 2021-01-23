@@ -12,7 +12,8 @@ jobs:
       - uses: ethomson/send-tweet-action@v1
         with:
           status: >
-            ✨ I've just released ${{ github.event.release.tag_name }} of Spruce, the global state management library for Alpine.js.\n
+            ✨ I've just released ${{ github.event.release.tag_name }} of Spruce, the global state management library for Alpine.js.
+
 
             Check out the release notes here: https://github.com/ryangjchandler/spruce/releases/tag/${{ github.event.release.tag_name }}
           consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}

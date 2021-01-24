@@ -31,5 +31,21 @@ describe('watchers', () => {
         cy.get('[data-change-name]').click()
 
         cy.get('[data-todo-label]').should('have.text', 'Changed!')
+
+        cy.get('[data-input-todo1]').type('sample')
+        cy.get('[data-add-todo1]').click()
+        cy.get('[data-todo1-item]').should('have.length', 1)
+        cy.get('[data-todo2-item]').should('have.length', 1)
+        cy.get('[data-todo1-item]').eq(0).should('contain.text', 'sample')
+        cy.get('[data-todo2-item]').eq(0).should('contain.text', 'sample')
+
+        cy.get('[data-input-todo2]').type('sample2')
+        cy.get('[data-add-todo2]').click()
+        cy.get('[data-todo1-item]').should('have.length', 2)
+        cy.get('[data-todo2-item]').should('have.length', 2)
+        cy.get('[data-todo1-item]').eq(0).should('contain.text', 'sample')
+        cy.get('[data-todo2-item]').eq(0).should('contain.text', 'sample')
+        cy.get('[data-todo1-item]').eq(1).should('contain.text', 'sample2')
+        cy.get('[data-todo2-item]').eq(1).should('contain.text', 'sample2')
     })
 })

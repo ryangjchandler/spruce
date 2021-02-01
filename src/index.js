@@ -114,7 +114,7 @@ const Spruce = {
     },
 
     reset(name, state) {
-        if (! this.stores[name]) {
+        if (this.stores[name] === undefined) {
             return;
         }
         

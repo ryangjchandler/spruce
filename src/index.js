@@ -27,7 +27,7 @@ const Spruce = {
 
         this.stores = createObservable(this.stores, {
             get: (target, key, receiver) => {
-                if (Object.is(receiver, this.stores) && ['get', 'set', 'toggle', 'clear'].includes(key)) {
+                if (Object.is(receiver, this.stores) && ['get', 'set', 'toggle', 'call', 'clear'].includes(key)) {
                     return this[key].bind(this)
                 }
 
@@ -185,6 +185,10 @@ const Spruce = {
 
     toggle(name) {
         return this.set(name, ! this.get(name))
+    },
+
+    call(name, ...args) {
+        return this.get(name)(...args)
     },
 
     clear(name) {

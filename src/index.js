@@ -10,7 +10,7 @@ const Spruce = {
 
     subscribers: [],
 
-    watchers: {},
+    pendingWatchers: {},
 
     disableReactivity: false,
 
@@ -58,7 +58,7 @@ const Spruce = {
 
         this.disableReactivity = true
 
-        Object.entries(this.watchers).forEach(([name, callbacks]) => {
+        Object.entries(this.pendingWatchers).forEach(([name, callbacks]) => {
             callbacks.forEach(callback => this.watch(name, callback))
         })
 
@@ -197,9 +197,9 @@ const Spruce = {
 
     watch(name, callback) {
         if (! this.hasStarted) {
-            this.watchers[name] || (this.watchers[name] = [])
+            this.pendingWatchers[name] || (this.pendingWatchers[name] = [])
 
-            this.watchers[name].push(callback)
+            this.pendingWatchers[name].push(callback)
 
             return [() => this.unwatch(name, callback)]
         }

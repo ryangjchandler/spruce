@@ -4,14 +4,21 @@
     </head>
     <body>
         <div x-data>
-            <span x-text="$store.foo.bar"></span>
-            <button x-on:click="Spruce.reset('foo', { bar: 'boo' })"></button>
+            <span data-basic x-text="$store.foo.bar"></span>
+            <button data-basic-update x-on:click="Spruce.reset('foo', { bar: 'boo' })"></button>
+        </div>
+
+        <div x-data>
+            <span data-null-store x-text="$store.example?.name"></span>
+            <button data-null-store-update x-on:click="Spruce.reset('example', { name: 'Ryan' })"></button>
         </div>
 
         <script src="/dist/spruce.umd.js"></script>
 
         <script>
             Spruce.store('foo', { bar: 'car' })
+
+            Spruce.store('example', null)
         </script>
     </body>
 </html>

@@ -10,7 +10,7 @@ const Spruce = {
 
     subscribers: [],
 
-    watchers: {},
+    pendingWatchers: {},
 
     disableReactivity: false,
 
@@ -27,7 +27,7 @@ const Spruce = {
 
         this.stores = createObservable(this.stores, {
             get: (target, key, receiver) => {
-                if (Object.is(receiver, this.stores) && ['get', 'set', 'toggle', 'clear'].includes(key)) {
+                if (Object.is(receiver, this.stores) && ['get', 'set', 'toggle', 'call', 'clear'].includes(key)) {
                     return this[key].bind(this)
                 }
 
@@ -58,7 +58,7 @@ const Spruce = {
 
         this.disableReactivity = true
 
-        Object.entries(this.watchers).forEach(([name, callbacks]) => {
+        Object.entries(this.pendingWatchers).forEach(([name, callbacks]) => {
             callbacks.forEach(callback => this.watch(name, callback))
         })
 
@@ -114,7 +114,7 @@ const Spruce = {
     },
 
     reset(name, state) {
-        if (! this.stores[name]) {
+        if (this.stores[name] === undefined) {
             return;
         }
         
@@ -187,15 +187,19 @@ const Spruce = {
         return this.set(name, ! this.get(name))
     },
 
+    call(name, ...args) {
+        return this.get(name)(...args)
+    },
+
     clear(name) {
         return this.persistenceDriver.removeItem(`__spruce:${name}`)
     },
 
     watch(name, callback) {
         if (! this.hasStarted) {
-            this.watchers[name] || (this.watchers[name] = [])
+            this.pendingWatchers[name] || (this.pendingWatchers[name] = [])
 
-            this.watchers[name].push(callback)
+            this.pendingWatchers[name].push(callback)
 
             return [() => this.unwatch(name, callback)]
         }

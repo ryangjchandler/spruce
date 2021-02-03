@@ -14,6 +14,8 @@
                 </template>
             </ul>
             <button data-add-todo @click="$store.todo.add('Example')">Add Todo</button>
+            <button data-reset-todo-label @click="$store.todoLabel.test = 'Yes!'">Reset Todo Label</button>
+            <button data-reset-todos @click="$store.todo.todos = []">Reset Todos</button>
             <span data-todo-label x-text="$store.todoLabel.test"></span>
         </div>
 
@@ -21,6 +23,34 @@
             <button data-change-name @click.prevent="$store.user.name = 'Bob'">
                 Change user name
             </button>
+        </div>
+
+        <div>
+            Two way watchers
+
+            <div x-data="{ todo1: '' }" class="flex flex-col justify-center items-center border">
+                <h1>Store 1</h1>
+                <ul>
+                    <template x-for="todo in $store.todo1.todos1">
+                        <li data-todo1-item x-text="todo"></li>
+                    </template>
+                </ul>
+                <input data-input-todo1 x-model="todo1" class="w-32 border">
+                <button data-add-todo1 @click="$store.todo1.add(todo1); todo1 = ''">Add Todo 1</button>
+                <button data-reset-todos1 @click="$store.todo1.todos1 = []">Reset Todos 1</button>
+            </div>
+
+            <div x-data="{ todo2: '' }" class="flex flex-col justify-center items-center border">
+                <h2>Store 2</h2>
+                <ul>
+                    <template x-for="todo in $store.todo2.todos2">
+                        <li data-todo2-item x-text="todo"></li>
+                    </template>
+                </ul>
+                <input data-input-todo2 x-model="todo2" class="w-32 border">
+                <button data-add-todo2 @click="$store.todo2.add(todo2); todo2 = ''">Add Todo 2</button>
+                <button data-reset-todos2 @click="$store.todo2.todos2 = []">Reset Todos 2</button>
+            </div>
         </div>
 
         <script src="/dist/spruce.umd.js"></script>
@@ -57,6 +87,53 @@
             Spruce.watch('user', () => {
                 Spruce.store('todoLabel').test = 'Changed!'
             })
+
+            Spruce.store('todo1', {
+                todos1: [],
+                add(todo) {
+                    this.todos1.push(todo)
+                }
+            })
+
+            Spruce.store('todo2', {
+                todos2: [],
+                add(todo) {
+                    this.todos2.push(todo)
+                }
+            })
+
+            Spruce.watch('todo1.todos1', () => {
+                if (valuesAreEqual(Spruce.store('todo1').todos1, Spruce.store('todo2').todos2)) return
+
+                Spruce.store('todo2').todos2 = cloneValue(Spruce.store('todo1').todos1)
+            })
+
+            Spruce.watch('todo2.todos2', () => {
+                if (valuesAreEqual(Spruce.store('todo1').todos1, Spruce.store('todo2').todos2)) return
+
+                Spruce.store('todo1').todos1 = cloneValue(Spruce.store('todo2').todos2)
+            })
+
+            function getStoreProperty(property) {
+                let value = this.cloneValue(property)
+
+                // Unset watchers if they exist to ensure they don't get sent to Livewire
+                if (value) {
+                    delete value.__watchers
+                }
+
+                return value
+            }
+
+            function valuesAreEqual(value1, value2) {
+                // Due to the deep clone using stringify, we need to do the same here to compare.
+                return JSON.stringify(getStoreProperty(value1)) === JSON.stringify(getStoreProperty(value2))
+            }
+
+            function cloneValue(value) {
+                // Use stringify and parse as a hack to deep clone
+                return typeof value !== 'undefined' ? JSON.parse(JSON.stringify(value)) : value
+            }
         </script>
     </body>
 </html>

@@ -121,6 +121,28 @@ const Spruce = {
         this.stores[name] = state
     },
 
+    delete(name, reload = true) {
+        if (this.stores[name] === undefined) {
+            return false;
+        }
+
+        delete this.stores[name]
+
+        if (reload) {
+            this.updateSubscribers()
+        }
+
+        return true;
+    },
+
+    deleteAll() {
+        const results = Object.keys(this.stores).map(key => this.delete(key, false))
+
+        this.updateSubscribers()
+
+        return !results.some(bool => !bool)
+    },
+
     subscribe(el) {
         if (!this.subscribers.includes(el)) {
             this.subscribers.push(el)

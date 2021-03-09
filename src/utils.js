@@ -1,4 +1,4 @@
-import compareVersions from 'compare-versions'
+import { compare } from 'compare-versions'
 
 export const isNullOrUndefined = value => {
     return value === null || value === undefined
@@ -32,5 +32,5 @@ export const checkForAlpine = () => {
         return false
     }
 
-    return compareVersions.compare(window.Alpine.version, '2.7.0', '>=')
+    return compare(window.Alpine.version, '2.7.0', '>=')
 }

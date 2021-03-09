@@ -8,10 +8,7 @@
     },
     "author": "Ryan Chandler <support@ryangjchandler.co.uk>",
     "license": "MIT",
-    "source": "src/index.js",
-    "main": "dist/spruce.js",
-    "umd:main": "dist/spruce.umd.js",
-    "module": "dist/spruce.module.js",
+    "main": "dist/spruce.umd.js",
     "scripts": {
         "build": "rollup -c",
         "watch": "rollup -c -w",

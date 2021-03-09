@@ -1,6 +1,7 @@
-import babel from 'rollup-plugin-babel'
+import { babel } from '@rollup/plugin-babel'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import commonJs from '@rollup/plugin-commonjs'
 import filesize from 'rollup-plugin-filesize'
-import resolve from 'rollup-plugin-node-resolve'
 
 export default {
     input: 'src/index.js',
@@ -13,21 +14,11 @@ export default {
         }
     ],
     plugins: [
-        resolve(),
         filesize(),
+        nodeResolve(),
+        commonJs(),
         babel({
-            babelrc: false,
-            exclude: 'node_modules/**',
-            presets: [
-                [
-                    '@babel/preset-env',
-                    {
-                        targets: {
-                            node: 'current'
-                        }
-                    }
-                ]
-            ]
-        })
+            babelHelpers: 'bundled'
+        }),
     ]
 }

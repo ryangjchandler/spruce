@@ -245,8 +245,12 @@ const Spruce = {
          */
         const part = Object.is(target, this.get(name)) ? '__self' : nameParts[nameParts.length - 1]
 
-        if (! target.__watchers) {
-            target.__watchers = new Map
+        if (! target.hasOwnProperty('__watchers')) {
+            Object.defineProperty(target, '__watchers', {
+                enumerable: false,
+                value: new Map,
+                configurable: true
+            })
         }
         
         if (! target.__watchers.has(part)) {

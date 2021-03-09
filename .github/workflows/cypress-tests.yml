@@ -20,20 +20,20 @@ jobs:
         id: NPM
         with:
           path: node_modules
-          key: npm-cache-${{ hashFiles('yarn.lock') }}
+          key: npm-cache-${{ hashFiles('package-lock.json') }}
 
       - name: Cache Cypress
         uses: actions/cache@v1
         id: cypress
         with:
           path: ~/.cache/Cypress
-          key: cypress-cache-${{ hashFiles('yarn.lock') }}
+          key: cypress-cache-${{ hashFiles('package-lock.json') }}
 
       - name: Run Cypress
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
-          start: yarn pre-cypress
+          start: npm run pre-cypress
           
       - name: Cypress screenshots
         uses: actions/upload-artifact@v1

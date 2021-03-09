@@ -13,8 +13,8 @@
     "umd:main": "dist/spruce.umd.js",
     "module": "dist/spruce.module.js",
     "scripts": {
-        "build": "microbundle",
-        "watch": "microbundle watch",
+        "build": "rollup -c",
+        "watch": "rollup -c -w",
         "pre-cypress": "http-server",
         "cypress": "start-server-and-test 'http-server -c-1 --silent' 8080 'npx cypress run'"
     },

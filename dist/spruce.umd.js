@@ -1,2 +1,391 @@
-!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):e.spruce=t()}(this,function(){function e(e,t,r){return t in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}function t(e,t){var r=Object.keys(e);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(e);t&&(n=n.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),r.push.apply(r,n)}return r}"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self&&self;var r,n=(function(e,t){e.exports=function(){var e=/^v?(?:\d+)(\.(?:[x*]|\d+)(\.(?:[x*]|\d+)(\.(?:[x*]|\d+))?(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?)?)?$/i;function t(e){var t,r=e.replace(/^v/,"").replace(/\+.*$/,""),n=-1===(t=r).indexOf("-")?t.length:t.indexOf("-"),i=r.substring(0,n).split(".");return i.push(r.substring(n+1)),i}function r(e){return isNaN(Number(e))?e:Number(e)}function n(t){if("string"!=typeof t)throw new TypeError("Invalid argument expected string");if(!e.test(t))throw new Error("Invalid argument not valid semver ('"+t+"' received)")}function i(e,i){[e,i].forEach(n);for(var s=t(e),o=t(i),c=0;c<Math.max(s.length-1,o.length-1);c++){var a=parseInt(s[c]||0,10),u=parseInt(o[c]||0,10);if(a>u)return 1;if(u>a)return-1}var f=s[s.length-1],h=o[o.length-1];if(f&&h){var d=f.split(".").map(r),l=h.split(".").map(r);for(c=0;c<Math.max(d.length,l.length);c++){if(void 0===d[c]||"string"==typeof l[c]&&"number"==typeof d[c])return-1;if(void 0===l[c]||"string"==typeof d[c]&&"number"==typeof l[c])return 1;if(d[c]>l[c])return 1;if(l[c]>d[c])return-1}}else if(f||h)return f?-1:1;return 0}var s=[">",">=","=","<","<="],o={">":[1],">=":[0,1],"=":[0],"<=":[-1,0],"<":[-1]};return i.validate=function(t){return"string"==typeof t&&e.test(t)},i.compare=function(e,t,r){!function(e){if("string"!=typeof e)throw new TypeError("Invalid operator type, expected string but got "+typeof e);if(-1===s.indexOf(e))throw new TypeError("Invalid operator, expected one of "+s.join("|"))}(r);var n=i(e,t);return o[r].indexOf(n)>-1},i}()}(r={exports:{}}),r.exports),i=function(e){return null==e},s=function(e){return Object.getPrototypeOf(e)===Object.prototype},o=function(e){return Array.isArray(e)},c=function(e,t){return Object.entries(e).forEach(function(r){var n=r[0],a=r[1];i(a)||!s(a)&&!o(a)||(e[n]=c(a,t))}),new Proxy(e,{get:function(e,r,n){return t.get(e,r,n)},set:function(e,r,n,a){i(n)||!s(n)&&!o(n)||(n=c(n,t));var u=e[r];return e[r]=n,i(u)||i(u.__watchers)||(e[r].__watchers=u.__watchers),t.set(e,r,e[r],a),!0}})},a={stores:{},persistenceDriver:window.localStorage,persisted:[],subscribers:[],pendingWatchers:{},disableReactivity:!1,startingCallbacks:[],startedCallbacks:[],hasStarted:!1,start:function(){var e=this;this.startingCallbacks.forEach(function(e){return e()}),this.attach(),this.stores=c(this.stores,{get:function(t,r,n){return Object.is(n,e.stores)&&["get","set","toggle","call","clear"].includes(r)?e[r].bind(e):Reflect.get(t,r,n)},set:function(t,r,n,i){if(!e.disableReactivity){e.updateSubscribers(),e.runWatchers(t,r,n,i),e.disableReactivity=!0;try{e.persisted.forEach(e.updateLocalStorage.bind(e))}catch(e){}e.disableReactivity=!1}}}),this.hasStarted=!0,this.disableReactivity=!0,Object.entries(this.pendingWatchers).forEach(function(t){var r=t[0];t[1].forEach(function(t){return e.watch(r,t)})}),this.disableReactivity=!1,this.startedCallbacks.forEach(function(e){return e()})},starting:function(e){this.startingCallbacks.push(e)},started:function(e){this.startedCallbacks.push(e)},attach:function(){if(!(navigator.userAgent.includes("Node.js")||navigator.userAgent.includes("jsdom")||window.Alpine&&n.compare(window.Alpine.version,"2.7.0",">=")))throw new Error("[Spruce] You must be using Alpine >= 2.5.0 to use Spruce.");var e=this;window.Alpine.addMagicProperty("store",function(t){return e.subscribe(t),e.stores})},store:function(e,t,r){if(void 0===r&&(r=!1),"function"==typeof t&&(t=t()),r)try{this.stores[e]=this.retrieveFromLocalStorage(e,(n={},Object.entries(t).filter(function(e){return"function"==typeof e[1]}).forEach(function(e){return n[e[0]]=e[1]}),n)),this.persisted.includes(e)||this.persisted.push(e)}catch(e){}var n;return this.stores[e]||(this.stores[e]=t),this.stores[e]},reset:function(e,t){void 0!==this.stores[e]&&(this.stores[e]=t)},delete:function(e,t){return void 0===t&&(t=!0),void 0!==this.stores[e]&&(delete this.stores[e],t&&this.updateSubscribers(),!0)},deleteAll:function(){var e=this,t=Object.keys(this.stores).map(function(t){return e.delete(t,!1)});return this.updateSubscribers(),!t.some(function(e){return!e})},subscribe:function(e){return this.subscribers.includes(e)||this.subscribers.push(e),this.stores},updateSubscribers:function(){this.subscribers.filter(function(e){return!!e.__x}).forEach(function(e){e.__x.updateElements(e)})},retrieveFromLocalStorage:function(e,t){void 0===t&&(t={});var r=this.persistenceDriver.getItem("__spruce:"+e);if(!r)return null;var n=JSON.parse(r);return"object"==typeof n&&(delete(n=Object.assign(t,n)).__watchers,delete n.__key_name),n},updateLocalStorage:function(r){var n=function(r){for(var n=1;n<arguments.length;n++){var i=null!=arguments[n]?arguments[n]:{};n%2?t(Object(i),!0).forEach(function(t){e(r,t,i[t])}):Object.getOwnPropertyDescriptors?Object.defineProperties(r,Object.getOwnPropertyDescriptors(i)):t(Object(i)).forEach(function(e){Object.defineProperty(r,e,Object.getOwnPropertyDescriptor(i,e))})}return r}({},this.store(r));delete n.__watchers,delete n.__key_name,this.persistenceDriver.setItem("__spruce:"+r,JSON.stringify(this.store(r)))},get:function(e,t){return void 0===t&&(t=this.stores),e.split(".").reduce(function(e,t){return e[t]},t)},set:function(e,t,r){return void 0===r&&(r=this.stores),o(e)||(e=e.split(".")),1===e.length?r[e[0]]=t:r[e[0]]?this.set(e.slice(1),t,r[e[0]]):(r[e[0]]={},this.set(e.slice(1),t,r[e[0]]))},toggle:function(e){return this.set(e,!this.get(e))},call:function(e){for(var t=[],r=arguments.length-1;r-- >0;)t[r]=arguments[r+1];return this.get(e).apply(void 0,t)},clear:function(e){return this.persistenceDriver.removeItem("__spruce:"+e)},watch:function(e,t){var r=this;if(!this.hasStarted)return this.pendingWatchers[e]||(this.pendingWatchers[e]=[]),this.pendingWatchers[e].push(t),[function(){return r.unwatch(e,t)}];var n=e.split("."),c=n.reduce(function(e,t){var r=e[t];return i(r)||!s(r)&&!o(r)?e:r},this.stores),a=Object.is(c,this.get(e))?"__self":n[n.length-1];return c.hasOwnProperty("__watchers")||Object.defineProperty(c,"__watchers",{enumerable:!1,value:new Map,configurable:!0}),c.__watchers.has(a)||c.__watchers.set(a,new Set),c.__watchers.get(a).add(t),[function(){return r.unwatch(e,t)}]},unwatch:function(e,t){var r=e.split("."),n=r.reduce(function(e,t){var r=e[t];return i(r)||!s(r)&&!o(r)?e:r},this.stores),c=Object.is(n,this.get(e))?"__self":r[r.length-1],a=n.__watchers;a.has(c)&&a.get(c).delete(t)},watchers:function(e){var t=e.split("."),r=t.reduce(function(e,t){var r=e[t];return i(r)||!s(r)&&!o(r)?e:r},this.stores),n=Object.is(r,this.get(e))?"__self":t[t.length-1];return r.__watchers?r.__watchers.get(n):{}},runWatchers:function(e,t,r){e.__watchers&&(e.__watchers.has(t)&&e.__watchers.get(t).forEach(function(e){return e(r)}),e.__watchers.has("__self")&&e.__watchers.get("__self").forEach(function(e){return e(r,t)}))},persistUsing:function(e){if(this.persisted.length>0&&console.warn("[Spruce] You have already initialised a persisted store. Changing the driver may cause issues."),"function"!=typeof e.getItem)throw new Error("[Spruce] The persistence driver must have a `getItem(key)` method.");if("function"!=typeof e.setItem)throw new Error("[Spruce] The persistence driver must have a `setItem(key, value)` method.");if("function"!=typeof e.removeItem)throw new Error("[Spruce] The persistence driver must have a `removeItem(name)` method.");this.persistenceDriver=e}};window.Spruce=a;var u=window.deferLoadingAlpine||function(e){e()};return window.deferLoadingAlpine=function(e){window.Spruce.start(),u(e)},a});
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spruce = factory());
+}(this, (function () { 'use strict';
+
+    require('compare-versions');
+
+    const isNullOrUndefined = value => {
+      return value === null || value === undefined;
+    };
+    const isObject = _ => {
+      return Object.getPrototypeOf(_) === Object.prototype;
+    };
+    const isArray = _ => Array.isArray(_);
+    const getMethods = obj => {
+      let methods = {};
+      Object.entries(obj).filter(([_, value]) => typeof value === 'function').forEach(([key, value]) => methods[key] = value);
+      return methods;
+    };
+    const isTesting = () => {
+      return navigator.userAgent.includes("Node.js") || navigator.userAgent.includes("jsdom");
+    };
+    const checkForAlpine = () => {
+      if (isTesting()) {
+        return true;
+      }
+
+      if (!window.Alpine) {
+        return false;
+      }
+
+      return compareVersions.compare(window.Alpine.version, '2.7.0', '>=');
+    };
+
+    const createObservable = (target, callbacks) => {
+      Object.entries(target).forEach(([key, value]) => {
+        if (!isNullOrUndefined(value) && (isObject(value) || isArray(value))) {
+          target[key] = createObservable(value, callbacks);
+        }
+      });
+      return new Proxy(target, {
+        get(target, key, receiver) {
+          return callbacks.get(target, key, receiver);
+        },
+
+        set(target, key, value, receiver) {
+          if (!isNullOrUndefined(value) && (isObject(value) || isArray(value))) {
+            value = createObservable(value, callbacks);
+          }
+
+          let originalValue = target[key];
+          target[key] = value; // Copy watchers from the original value if they exist
+
+          if (!isNullOrUndefined(originalValue) && !isNullOrUndefined(originalValue.__watchers)) {
+            target[key].__watchers = originalValue.__watchers;
+          }
+
+          callbacks.set(target, key, target[key], receiver);
+          return true;
+        }
+
+      });
+    };
+
+    const Spruce = {
+      stores: {},
+      persistenceDriver: window.localStorage,
+      persisted: [],
+      subscribers: [],
+      pendingWatchers: {},
+      disableReactivity: false,
+      startingCallbacks: [],
+      startedCallbacks: [],
+      hasStarted: false,
+
+      start() {
+        this.startingCallbacks.forEach(fn => fn());
+        this.attach();
+        this.stores = createObservable(this.stores, {
+          get: (target, key, receiver) => {
+            if (Object.is(receiver, this.stores) && ['get', 'set', 'toggle', 'call', 'clear'].includes(key)) {
+              return this[key].bind(this);
+            }
+
+            return Reflect.get(target, key, receiver);
+          },
+          set: (target, key, value, receiver) => {
+            if (this.disableReactivity) {
+              return;
+            }
+
+            this.updateSubscribers();
+            this.runWatchers(target, key, value, receiver);
+            this.disableReactivity = true;
+
+            try {
+              this.persisted.forEach(this.updateLocalStorage.bind(this));
+            } catch (e) {// Do nothing here (thanks Safari!)
+            }
+
+            this.disableReactivity = false;
+          }
+        });
+        this.hasStarted = true;
+        this.disableReactivity = true;
+        Object.entries(this.pendingWatchers).forEach(([name, callbacks]) => {
+          callbacks.forEach(callback => this.watch(name, callback));
+        });
+        this.disableReactivity = false;
+        this.startedCallbacks.forEach(fn => fn());
+      },
+
+      starting(callback) {
+        this.startingCallbacks.push(callback);
+      },
+
+      started(callback) {
+        this.startedCallbacks.push(callback);
+      },
+
+      attach() {
+        if (!checkForAlpine()) {
+          throw new Error('[Spruce] You must be using Alpine >= 2.5.0 to use Spruce.');
+        }
+
+        const self = this;
+        window.Alpine.addMagicProperty('store', el => {
+          self.subscribe(el);
+          return self.stores;
+        });
+      },
+
+      store(name, state, persist = false) {
+        if (typeof state === 'function') {
+          state = state();
+        }
+
+        if (persist) {
+          try {
+            this.stores[name] = this.retrieveFromLocalStorage(name, getMethods(state));
+
+            if (!this.persisted.includes(name)) {
+              this.persisted.push(name);
+            }
+          } catch (e) {// Do nothing here (thanks Safari!)
+          }
+        }
+
+        if (!this.stores[name]) {
+          this.stores[name] = state;
+        }
+
+        return this.stores[name];
+      },
+
+      reset(name, state) {
+        if (this.stores[name] === undefined) {
+          return;
+        }
+
+        this.stores[name] = state;
+      },
+
+      delete(name, reload = true) {
+        if (this.stores[name] === undefined) {
+          return false;
+        }
+
+        delete this.stores[name];
+
+        if (reload) {
+          this.updateSubscribers();
+        }
+
+        return true;
+      },
+
+      deleteAll() {
+        const results = Object.keys(this.stores).map(key => this.delete(key, false));
+        this.updateSubscribers();
+        return !results.some(bool => !bool);
+      },
+
+      subscribe(el) {
+        if (!this.subscribers.includes(el)) {
+          this.subscribers.push(el);
+        }
+
+        return this.stores;
+      },
+
+      updateSubscribers() {
+        this.subscribers.filter(el => !!el.__x).forEach(el => {
+          el.__x.updateElements(el);
+        });
+      },
+
+      retrieveFromLocalStorage(name, methods = {}) {
+        const value = this.persistenceDriver.getItem(`__spruce:${name}`);
+
+        if (!value) {
+          return null;
+        }
+
+        let storage = JSON.parse(value);
+
+        if (typeof storage === 'object') {
+          storage = Object.assign(methods, storage);
+          delete storage.__watchers;
+          delete storage.__key_name;
+        }
+
+        return storage;
+      },
+
+      updateLocalStorage(name) {
+        ({ ...this.store(name)
+        });
+        this.persistenceDriver.setItem(`__spruce:${name}`, JSON.stringify(this.store(name)));
+      },
+
+      get(name, target = this.stores) {
+        return name.split('.').reduce((target, part) => target[part], target);
+      },
+
+      set(name, value, target = this.stores) {
+        if (!isArray(name)) {
+          name = name.split('.');
+        }
+
+        if (name.length === 1) return target[name[0]] = value;
+
+        if (target[name[0]]) {
+          return this.set(name.slice(1), value, target[name[0]]);
+        } else {
+          target[name[0]] = {};
+          return this.set(name.slice(1), value, target[name[0]]);
+        }
+      },
+
+      toggle(name) {
+        return this.set(name, !this.get(name));
+      },
+
+      call(name, ...args) {
+        return this.get(name)(...args);
+      },
+
+      clear(name) {
+        return this.persistenceDriver.removeItem(`__spruce:${name}`);
+      },
+
+      watch(name, callback) {
+        if (!this.hasStarted) {
+          this.pendingWatchers[name] || (this.pendingWatchers[name] = []);
+          this.pendingWatchers[name].push(callback);
+          return [() => this.unwatch(name, callback)];
+        }
+
+        const nameParts = name.split('.');
+        const target = nameParts.reduce((target, part) => {
+          const sub = target[part];
+
+          if (!isNullOrUndefined(sub) && (isObject(sub) || isArray(sub))) {
+            return sub;
+          }
+
+          return target;
+        }, this.stores);
+        /**
+         * If the target object / array is the property
+         * that needs to be watched, a magic `__self` key is
+         * used so that runner can pick up on it later.
+         */
+
+        const part = Object.is(target, this.get(name)) ? '__self' : nameParts[nameParts.length - 1];
+
+        if (!target.hasOwnProperty('__watchers')) {
+          Object.defineProperty(target, '__watchers', {
+            enumerable: false,
+            value: new Map(),
+            configurable: true
+          });
+        }
+
+        if (!target.__watchers.has(part)) {
+          target.__watchers.set(part, new Set());
+        }
+
+        target.__watchers.get(part).add(callback);
+
+        return [() => this.unwatch(name, callback)];
+      },
+
+      unwatch(name, callback) {
+        const nameParts = name.split('.');
+        const target = nameParts.reduce((target, part) => {
+          const sub = target[part];
+
+          if (!isNullOrUndefined(sub) && (isObject(sub) || isArray(sub))) {
+            return sub;
+          }
+
+          return target;
+        }, this.stores);
+        const part = Object.is(target, this.get(name)) ? '__self' : nameParts[nameParts.length - 1];
+        const watchers = target.__watchers;
+
+        if (!watchers.has(part)) {
+          return;
+        }
+
+        watchers.get(part).delete(callback);
+      },
+
+      watchers(name) {
+        const nameParts = name.split('.');
+        const target = nameParts.reduce((target, part) => {
+          const sub = target[part];
+
+          if (!isNullOrUndefined(sub) && (isObject(sub) || isArray(sub))) {
+            return sub;
+          }
+
+          return target;
+        }, this.stores);
+        const part = Object.is(target, this.get(name)) ? '__self' : nameParts[nameParts.length - 1];
+
+        if (!target.__watchers) {
+          return {};
+        }
+
+        return target.__watchers.get(part);
+      },
+
+      runWatchers(target, key, value) {
+        if (!target.__watchers) {
+          return;
+        }
+
+        if (target.__watchers.has(key)) {
+          target.__watchers.get(key).forEach(f => f(value));
+        }
+        /**
+         * The `__self` key is used for watchers that are registered
+         * to the object or array being updated.
+         */
+
+
+        if (target.__watchers.has('__self')) {
+          target.__watchers.get('__self').forEach(f => f(value, key));
+        }
+      },
+
+      persistUsing(driver) {
+        if (this.persisted.length > 0) {
+          console.warn('[Spruce] You have already initialised a persisted store. Changing the driver may cause issues.');
+        }
+
+        if (typeof driver.getItem !== 'function') {
+          throw new Error('[Spruce] The persistence driver must have a `getItem(key)` method.');
+        }
+
+        if (typeof driver.setItem !== 'function') {
+          throw new Error('[Spruce] The persistence driver must have a `setItem(key, value)` method.');
+        }
+
+        if (typeof driver.removeItem !== 'function') {
+          throw new Error('[Spruce] The persistence driver must have a `removeItem(name)` method.');
+        }
+
+        this.persistenceDriver = driver;
+      }
+
+    };
+    window.Spruce = Spruce;
+
+    const deferrer = window.deferLoadingAlpine || function (callback) {
+      callback();
+    };
+
+    window.deferLoadingAlpine = function (callback) {
+      window.Spruce.start();
+      deferrer(callback);
+    };
+
+    return Spruce;
+
+})));
 //# sourceMappingURL=spruce.umd.js.map

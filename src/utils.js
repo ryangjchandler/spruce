@@ -1,4 +1,4 @@
-import compareVersions from 'compare-versions'
+const compareVersion = require('compare-versions')
 
 export const isNullOrUndefined = value => {
     return value === null || value === undefined

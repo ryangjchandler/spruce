@@ -15,7 +15,6 @@
     "scripts": {
         "build": "microbundle",
         "watch": "microbundle watch",
-        "test": "jest",
         "pre-cypress": "http-server",
         "cypress": "start-server-and-test 'http-server -c-1 --silent' 8080 'npx cypress run'"
     },

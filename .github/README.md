@@ -12,7 +12,7 @@ A lightweight global state management layer for Alpine.js
 
 ## Documentation
 
-To learn more about Spruce and how to use it, please refer to the [official documentation](https://docs.ryangjchandler.co.uk/spruce).
+To learn more about Spruce and how to use it, please refer to the [official documentation](https://spruce.ryangjchandler.co.uk).
 
 ## Credits
 

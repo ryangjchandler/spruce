@@ -8,6 +8,8 @@ const Spruce = {
 
     persisted: [],
 
+    persistedDrivers: {},
+
     subscribers: [],
 
     pendingWatchers: {},
@@ -94,7 +96,7 @@ const Spruce = {
             state = state()
         }
         
-        if (persist) {
+        if (persist === true || isObject(persist)) {
             try {
                 this.stores[name] = this.retrieveFromLocalStorage(name, getMethods(state))
 
@@ -157,8 +159,16 @@ const Spruce = {
         })
     },
 
-    retrieveFromLocalStorage(name, methods = {}) {
-        const value = this.persistenceDriver.getItem(`__spruce:${name}`)
+    retrieveFromLocalStorage(name, methods = {}, handler) {
+        let driver = this.persistenceDriver
+
+        if (handler !== undefined) {
+            this.guardAgainstInvalidDrivers(handler)
+
+            driver = handler
+        }
+        
+        const value = driver.getItem(`__spruce:${name}`)
 
         if (! value) {
             return null
@@ -330,6 +340,12 @@ const Spruce = {
             console.warn('[Spruce] You have already initialised a persisted store. Changing the driver may cause issues.')
         }
 
+        this.guardAgainstInvalidDrivers(driver)
+
+        this.persistenceDriver = driver
+    },
+
+    guardAgainstInvalidDrivers(driver) {
         if (typeof driver.getItem !== 'function') {
             throw new Error('[Spruce] The persistence driver must have a `getItem(key)` method.')
         }
@@ -341,8 +357,6 @@ const Spruce = {
         if (typeof driver.removeItem !== 'function') {
             throw new Error('[Spruce] The persistence driver must have a `removeItem(name)` method.')
         }
-
-        this.persistenceDriver = driver
     }
 }
 

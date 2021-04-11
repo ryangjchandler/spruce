@@ -294,9 +294,15 @@
         state = state();
       }
 
-      if (persist === true || isObject(persist)) {
+      const isValidDriver = this.isValidDriver(persist);
+
+      if (persist === true || isValidDriver) {
         try {
-          this.stores[name] = this.retrieveFromLocalStorage(name, getMethods(state));
+          this.stores[name] = this.retrieveFromLocalStorage(name, getMethods(state), isValidDriver ? persist : undefined);
+
+          if (isValidDriver) {
+            this.persistedDrivers[name] = persist;
+          }
 
           if (!this.persisted.includes(name)) {
             this.persisted.push(name);
@@ -384,7 +390,8 @@
 
       delete store.__watchers;
       delete store.__key_name;
-      this.persistenceDriver.setItem(`__spruce:${name}`, JSON.stringify(this.store(name)));
+      const driver = this.persistedDrivers[name] || this.persistenceDriver;
+      driver.setItem(`__spruce:${name}`, JSON.stringify(this.store(name)));
     },
 
     get(name, target = this.stores) {
@@ -541,6 +548,16 @@
       if (typeof driver.removeItem !== 'function') {
         throw new Error('[Spruce] The persistence driver must have a `removeItem(name)` method.');
       }
+    },
+
+    isValidDriver(driver) {
+      try {
+        this.guardAgainstInvalidDrivers(driver);
+      } catch (e) {
+        return false;
+      }
+
+      return true;
     }
 
   };

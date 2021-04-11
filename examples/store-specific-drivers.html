@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+    </head>
+    <body>
+        <div x-data>
+            <p>This store uses the `localStorage` driver for persistence.</p>
+            <p>Toggle the checkbox and see the data persist to the next page load.</p>
+            <input type="checkbox" x-model="$store.localStorage.checked">
+        </div>
+
+        <div x-data>
+            <p>This store uses the `sessionStorage` driver for persistence.</p>
+            <p>Toggle the checkbox and see the data persist to the next page load.</p>
+            <input type="checkbox" x-model="$store.sessionStorage.checked">
+        </div>
+
+        <script src="/dist/spruce.umd.js"></script>
+
+        <script>
+            Spruce.store('localStorage', {
+                checked: false,
+            }, true)
+
+            Spruce.store('sessionStorage', {
+                checked: false,
+            }, window.sessionStorage)
+        </script>
+    </body>
+</html>

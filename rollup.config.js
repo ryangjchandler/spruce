@@ -10,8 +10,9 @@ export default {
             name: 'Spruce',
             file: 'dist/spruce.umd.js',
             format: 'umd',
-            sourcemap: true
-        }
+            sourcemap: true,
+            strict: false,
+        },
     ],
     plugins: [
         filesize(),

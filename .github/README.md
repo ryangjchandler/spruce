@@ -10,6 +10,8 @@ A lightweight global state management layer for Alpine.js
 ![Build size Brotli](https://img.badgesize.io/ryangjchandler/spruce/master/dist/spruce.umd.js.svg?compression=gzip&style=flat-square&color=green)
 [![Monthly downloads via CDN](https://data.jsdelivr.com/v1/package/gh/ryangjchandler/spruce/badge)](https://www.jsdelivr.com/package/gh/ryangjchandler/spruce)
 
+> With the release of [Alpine 3.x](https://github.com/alpinejs/alpine-next), Spruce has been replaced with a first-party [`$store`](https://alpinejs.dev/magics/store) helper, as well as `Alpine.store`(https://alpinejs.dev/magics/store). This package will continue to support Alpine 2.x, but only with security releases. I want thank everyone who has used and supported this packages development over the last couple of years, it really does mean a lot. ❤️
+
 ## Documentation
 
 To learn more about Spruce and how to use it, please refer to the [official documentation](https://spruce.ryangjchandler.co.uk).
